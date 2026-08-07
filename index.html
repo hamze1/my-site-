@@ -1,1 +1,664 @@
-<h1>سلام! این سایت من است 🎉</h1>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KyanAI | اتوماسیون فروش با هوش مصنوعی</title>
+<meta name="description" content="حمزه — طراحی و پیاده‌سازی سیستم‌های اتوماسیون فروش مبتنی بر هوش مصنوعی برای کسب‌وکارهای فارسی‌زبان">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   Tokens
+   ============================================ */
+:root{
+  --bg: #0D0E17;
+  --surface: #15172400;
+  --surface-1: #171926;
+  --surface-2: #1E2131;
+  --border: #2A2D40;
+  --text: #F3F2ED;
+  --text-muted: #9A9CB3;
+  --turquoise: #2FD5C4;
+  --turquoise-dim: #1C8F84;
+  --gold: #D8AE5E;
+
+  --font-fa: 'Vazirmatn', sans-serif;
+  --font-latin: 'Space Grotesk', sans-serif;
+
+  --radius: 18px;
+  --radius-sm: 10px;
+  --ease: cubic-bezier(.22,.9,.3,1);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-fa);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+a{ color:inherit; text-decoration:none; }
+ul, ol{ list-style:none; }
+img{ max-width:100%; display:block; }
+
+::selection{ background:var(--turquoise); color:#08110F; }
+
+/* subtle grain so the dark surface doesn't feel flat/AI-default */
+.noise-layer{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:1;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.site-header{
+  position:fixed; top:0; inset-inline:0;
+  z-index:50;
+  backdrop-filter:blur(14px);
+  background:rgba(13,14,23,.72);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease);
+}
+.site-header.scrolled{ border-bottom-color:var(--border); }
+
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  height:76px;
+}
+
+.logo{ display:flex; align-items:center; gap:10px; font-family:var(--font-latin); }
+.logo-mark{
+  width:34px; height:34px; border-radius:9px;
+  background:linear-gradient(155deg, var(--turquoise), var(--turquoise-dim));
+  color:#06120F;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-fa); font-weight:800; font-size:1.05rem;
+}
+.logo-text{ font-weight:600; font-size:1.05rem; letter-spacing:.01em; }
+.logo-dot{ color:var(--turquoise); }
+
+.nav{ display:flex; align-items:center; gap:34px; font-size:.95rem; }
+.nav a{ color:var(--text-muted); transition:color .2s; }
+.nav a:hover{ color:var(--text); }
+.nav-cta{
+  color:var(--bg) !important;
+  background:var(--turquoise);
+  padding:9px 20px;
+  border-radius:100px;
+  font-weight:600;
+}
+.nav-cta:hover{ background:#3EE8D6; }
+
+.nav-toggle{ display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:8px; }
+.nav-toggle span{ width:22px; height:2px; background:var(--text); border-radius:2px; }
+
+/* ============================================
+   Hero
+   ============================================ */
+.hero{ padding:168px 0 96px; position:relative; z-index:2; }
+.hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; }
+
+.eyebrow{
+  font-family:var(--font-latin);
+  font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--turquoise); margin-bottom:18px; font-weight:600;
+}
+.eyebrow.center{ text-align:center; }
+
+.hero-copy h1{
+  font-size:clamp(2.2rem, 4.6vw, 3.4rem);
+  font-weight:800; line-height:1.28;
+  letter-spacing:-.01em;
+}
+.hero-copy h1 .highlight{
+  color:var(--turquoise);
+  position:relative;
+}
+
+.hero-lead{
+  margin-top:22px; max-width:520px;
+  color:var(--text-muted); font-size:1.08rem;
+}
+
+.hero-actions{ display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:14px 28px; border-radius:100px;
+  font-weight:600; font-size:.95rem;
+  transition:transform .2s var(--ease), background .2s, border-color .2s;
+}
+.btn-primary{ background:var(--turquoise); color:#06120F; }
+.btn-primary:hover{ transform:translateY(-2px); background:#3EE8D6; }
+.btn-ghost{ border:1px solid var(--border); color:var(--text); }
+.btn-ghost:hover{ border-color:var(--turquoise); color:var(--turquoise); }
+.btn-lg{ padding:16px 36px; font-size:1rem; }
+
+/* --- hero live-chat demo (signature element) --- */
+.hero-demo{ position:relative; }
+.demo-card{
+  background:var(--surface-1);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  min-height:340px;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.6);
+}
+.demo-card-head{
+  display:flex; align-items:center; gap:9px;
+  font-size:.82rem; color:var(--text-muted);
+  padding-bottom:16px; margin-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.dot{ width:8px; height:8px; border-radius:50%; background:var(--text-muted); }
+.dot-live{ background:var(--turquoise); box-shadow:0 0 0 4px rgba(47,213,196,.18); animation:pulse 2s infinite; }
+@keyframes pulse{ 50%{ opacity:.4; } }
+
+.chat-thread{ display:flex; flex-direction:column; gap:12px; min-height:220px; }
+.bubble{
+  max-width:82%;
+  padding:11px 16px;
+  border-radius:14px;
+  font-size:.92rem;
+  opacity:0; transform:translateY(8px);
+  animation:bubbleIn .5s var(--ease) forwards;
+}
+.bubble-in{ align-self:flex-start; background:var(--surface-2); border-bottom-left-radius:4px; }
+.bubble-out{ align-self:flex-end; background:var(--turquoise-dim); color:#EAFFFB; border-bottom-right-radius:4px; }
+.bubble-status{ align-self:center; font-size:.78rem; color:var(--turquoise); margin-top:4px; }
+@keyframes bubbleIn{ to{ opacity:1; transform:translateY(0); } }
+
+.demo-status{
+  margin-top:14px; font-size:.82rem; color:var(--text-muted);
+  text-align:center; font-family:var(--font-latin); letter-spacing:.02em;
+}
+
+/* ============================================
+   Trust strip
+   ============================================ */
+.trust-strip{ border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:22px 0; }
+.trust-inner{
+  display:flex; justify-content:center; flex-wrap:wrap; gap:14px;
+  color:var(--text-muted); font-size:.88rem;
+}
+.sep{ color:var(--border); }
+
+/* ============================================
+   Section shared
+   ============================================ */
+section{ padding:110px 0; position:relative; z-index:2; }
+.section-title{
+  font-size:clamp(1.7rem, 3.2vw, 2.4rem);
+  font-weight:800; margin-bottom:56px; max-width:640px;
+}
+.section-title.center{ margin-left:auto; margin-right:auto; text-align:center; }
+.contact-lead.center{ text-align:center; color:var(--text-muted); max-width:520px; margin:0 auto 40px; }
+
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+/* ============================================
+   Services
+   ============================================ */
+.service-grid{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+}
+.service-card{
+  background:var(--surface-1);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:30px 26px;
+  transition:border-color .25s, transform .25s var(--ease);
+}
+.service-card:hover{ border-color:var(--turquoise-dim); transform:translateY(-4px); }
+.service-icon{
+  display:inline-flex; width:42px; height:42px; align-items:center; justify-content:center;
+  border-radius:11px; background:var(--surface-2); color:var(--turquoise);
+  font-size:1.2rem; margin-bottom:18px;
+}
+.service-card h3{ font-size:1.08rem; margin-bottom:10px; font-weight:700; }
+.service-card p{ color:var(--text-muted); font-size:.92rem; }
+
+/* ============================================
+   Process
+   ============================================ */
+.process-list{ max-width:720px; margin:0 auto; display:flex; flex-direction:column; }
+.process-item{
+  display:flex; gap:26px; align-items:flex-start;
+  padding:26px 0; border-top:1px solid var(--border);
+}
+.process-item:last-child{ border-bottom:1px solid var(--border); }
+.process-num{
+  font-family:var(--font-latin); font-weight:700; color:var(--turquoise);
+  font-size:1.1rem; min-width:44px;
+}
+.process-item h3{ font-size:1.08rem; margin-bottom:6px; }
+.process-item p{ color:var(--text-muted); font-size:.92rem; }
+
+/* ============================================
+   Nora
+   ============================================ */
+.nora{ background:var(--surface-1); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.nora-grid{ display:grid; grid-template-columns:.6fr 1.4fr; gap:56px; align-items:center; }
+.nora-frame{
+  position:relative;
+  width:180px; height:180px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--turquoise), var(--turquoise-dim) 70%);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto;
+}
+.nora-initial{ font-size:3.2rem; font-weight:800; color:#06120F; }
+.nora-pulse{
+  position:absolute; inset:-14px; border-radius:50%;
+  border:1px solid var(--turquoise-dim);
+  animation:ring 3s var(--ease) infinite;
+}
+@keyframes ring{ 0%{ transform:scale(.9); opacity:.7; } 100%{ transform:scale(1.25); opacity:0; } }
+.nora-copy h2{ font-size:clamp(1.6rem,3vw,2.1rem); font-weight:800; margin-bottom:16px; }
+.nora-copy p{ color:var(--text-muted); max-width:560px; }
+
+/* ============================================
+   Work
+   ============================================ */
+.work-card{
+  background:var(--surface-1); border:1px solid var(--border);
+  border-radius:var(--radius); padding:40px;
+  display:flex; justify-content:space-between; gap:30px; flex-wrap:wrap;
+}
+.work-info h3{ font-size:1.2rem; margin-bottom:12px; }
+.work-info p{ color:var(--text-muted); max-width:640px; margin-bottom:16px; }
+.work-tag{ font-family:var(--font-latin); font-size:.78rem; color:var(--turquoise); letter-spacing:.04em; }
+
+/* ============================================
+   Contact
+   ============================================ */
+.contact-inner{ text-align:center; }
+.contact-actions{ display:flex; justify-content:center; }
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer{ border-top:1px solid var(--border); padding:30px 0; position:relative; z-index:2; }
+.footer-inner{
+  display:flex; justify-content:space-between; color:var(--text-muted); font-size:.85rem;
+  font-family:var(--font-latin);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 900px){
+  .hero-grid, .nora-grid{ grid-template-columns:1fr; }
+  .hero{ padding-top:140px; }
+  .service-grid{ grid-template-columns:1fr 1fr; }
+  .nav{
+    position:fixed; inset-inline:0; top:76px;
+    background:var(--bg); border-top:1px solid var(--border);
+    flex-direction:column; align-items:flex-start; gap:0;
+    padding:8px 28px 20px;
+    transform:translateY(-130%); transition:transform .3s var(--ease);
+  }
+  .nav.open{ transform:translateY(0); }
+  .nav a{ width:100%; padding:14px 0; border-bottom:1px solid var(--border); }
+  .nav-cta{ margin-top:14px; text-align:center; }
+  .nav-toggle{ display:flex; }
+}
+@media (max-width: 600px){
+  .service-grid{ grid-template-columns:1fr; }
+  section{ padding:76px 0; }
+  .work-card{ padding:28px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark">ک</span>
+      <span class="logo-text">kyan<span class="logo-dot">ai</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#services">خدمات</a>
+      <a href="#process">فرآیند کار</a>
+      <a href="#nora">نورا</a>
+      <a href="#work">نمونه‌کار</a>
+      <a href="#contact" class="nav-cta">شروع همکاری</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="باز کردن منو">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">اتوماسیون فروش مبتنی بر هوش مصنوعی</p>
+        <h1>
+          فروش کسب‌وکار شما،<br>
+          <span class="highlight">بدون خواب</span> ادامه پیدا می‌کند
+        </h1>
+        <p class="hero-lead">
+          من حمزه هستم. برای فروشگاه‌های آنلاین و کسب‌وکارهای کوچک فارسی‌زبان،
+          سیستمی می‌سازم که از اولین پیام مشتری تا ثبت سفارش را
+          به‌طور خودکار و هوشمند جلو می‌برد.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">درخواست مشاوره رایگان</a>
+          <a href="#process" class="btn btn-ghost">فرآیند کار را ببین</a>
+        </div>
+      </div>
+
+      <div class="hero-demo" aria-hidden="true">
+        <div class="demo-card">
+          <div class="demo-card-head">
+            <span class="dot dot-live"></span>
+            <span>مکالمه زنده در فروشگاه شما</span>
+          </div>
+          <div class="chat-thread" id="chatThread"></div>
+        </div>
+        <div class="demo-status" id="demoStatus">در حال تحلیل پیام مشتری…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="trust-strip">
+    <div class="wrap trust-inner">
+      <span>پاسخ‌گویی ۲۴ ساعته</span>
+      <span class="sep">·</span>
+      <span>اتصال به اینستاگرام و واتساپ</span>
+      <span class="sep">·</span>
+      <span>گفتگو کاملاً فارسی</span>
+      <span class="sep">·</span>
+      <span>راه‌اندازی در کمتر از ۲ هفته</span>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <p class="eyebrow center">خدمات</p>
+      <h2 class="section-title center">هرچه برای فروش آنلاین نیاز دارید</h2>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-icon">◎</span>
+          <h3>مشاوره هوش مصنوعی</h3>
+          <p>بررسی مسیر فروش فعلی شما و طراحی نقشه‌راه اتوماسیون، متناسب با نوع کسب‌وکار و بودجه.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-icon">▨</span>
+          <h3>آموزش تیم فروش</h3>
+          <p>آموزش عملی استفاده از ابزارهای هوش مصنوعی به تیم شما، تا بدون وابستگی به من ادامه دهید.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-icon">◫</span>
+          <h3>طراحی وب‌سایت</h3>
+          <p>وب‌سایت‌هایی سریع، مدرن و آماده برای فروش؛ با ساختاری که موتورهای جست‌وجو هم آن را می‌فهمند.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-icon">▤</span>
+          <h3>توسعه اپلیکیشن</h3>
+          <p>اپلیکیشن موبایل اختصاصی برای کسب‌وکارهایی که می‌خواهند تجربه‌ای فراتر از یک وب‌سایت بسازند.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-icon">◐</span>
+          <h3>دیجیتال مارکتینگ</h3>
+          <p>کمپین‌های تبلیغاتی و محتوایی که مخاطب فارسی‌زبان را از دیدن آگهی تا خرید همراهی می‌کند.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-icon">✦</span>
+          <h3>اتوماسیون فروش</h3>
+          <p>ربات‌های گفت‌وگوی هوشمند که پیام می‌گیرند، سوال جواب می‌دهند و سفارش را نهایی می‌کنند.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <p class="eyebrow center">فرآیند کار</p>
+      <h2 class="section-title center">مسیر همکاری ما، قدم به قدم</h2>
+
+      <ol class="process-list">
+        <li class="process-item">
+          <span class="process-num">۰۱</span>
+          <div>
+            <h3>پایه‌گذاری برند</h3>
+            <p>شناخت کسب‌وکار شما و تعریف هویت دیجیتالی که مخاطب به آن اعتماد می‌کند.</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">۰۲</span>
+          <div>
+            <h3>محصول ورودی</h3>
+            <p>راه‌اندازی اولین نسخه از سیستم، برای تست سریع در مقیاس کوچک.</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">۰۳</span>
+          <div>
+            <h3>مشاوره تخصصی</h3>
+            <p>بهینه‌سازی عمیق‌تر مسیر فروش، متناسب با داده‌های واقعی کسب‌وکار شما.</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">۰۴</span>
+          <div>
+            <h3>تولید محتوا</h3>
+            <p>ساخت محتوای ویدیویی و آموزشی برای رشد پایدار برند شما.</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">۰۵</span>
+          <div>
+            <h3>عضویت و پشتیبانی</h3>
+            <p>همراهی مستمر، به‌روزرسانی سیستم و پشتیبانی بلندمدت.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- NORA -->
+  <section class="nora" id="nora">
+    <div class="wrap nora-grid">
+      <div class="nora-visual" aria-hidden="true">
+        <div class="nora-frame">
+          <span class="nora-pulse"></span>
+          <span class="nora-initial">ن</span>
+        </div>
+      </div>
+      <div class="nora-copy">
+        <p class="eyebrow">شخصیت هوش مصنوعی</p>
+        <h2>آشنا شوید با نورا</h2>
+        <p>
+          نورا آواتار هوش‌مصنوعی‌ای است که برای آموزش دیجیتال مارکتینگ به زبان فارسی ساخته‌ام.
+          نورا نمونه‌ای زنده از همان تکنولوژی‌ای‌ست که برای مشتریانم پیاده‌سازی می‌کنم:
+          محتوایی که هر روز، بدون وقفه، مخاطب می‌سازد.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="wrap">
+      <p class="eyebrow center">نمونه‌کار</p>
+      <h2 class="section-title center">پروژه‌هایی که ساخته‌ام</h2>
+      <div class="work-card">
+        <div class="work-info">
+          <h3>پلتفرم آموزش برنامه‌نویسی و هوش مصنوعی</h3>
+          <p>وب‌سایت آموزشی فارسی با طراحی راست‌به‌چپ، انیمیشن‌های اسکرول و افکت‌های سه‌بعدی روی کارت‌ها؛ ساخته‌شده برای مخاطب فارسی‌زبان علاقه‌مند به هوش مصنوعی.</p>
+          <span class="work-tag">RTL · انیمیشن اسکرول · آموزش آنلاین</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap contact-inner">
+      <p class="eyebrow center">شروع کنیم</p>
+      <h2 class="section-title center">آماده‌اید فروش خودکار را تجربه کنید؟</h2>
+      <p class="contact-lead center">
+        یک پیام بفرستید و در کمتر از ۲۴ ساعت، نقشه‌راه اولیه اتوماسیون فروش‌تان را دریافت کنید.
+      </p>
+      <div class="contact-actions">
+        <a href="#" class="btn btn-primary btn-lg">ارسال پیام در اینستاگرام</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>© <span id="year"></span> kyanai.ir</span>
+    <span>اتوماسیون فروش با هوش مصنوعی</span>
+  </div>
+</footer>
+
+<script>
+// ============================================
+// Footer year
+// ============================================
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ============================================
+// Header scroll state
+// ============================================
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 12);
+}, { passive: true });
+
+// ============================================
+// Mobile nav toggle
+// ============================================
+const navToggle = document.getElementById('navToggle');
+const nav = document.getElementById('nav');
+navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+// ============================================
+// Scroll reveal
+// ============================================
+const revealTargets = document.querySelectorAll(
+  '.service-card, .process-item, .work-card, .nora-grid, .section-title, .contact-inner'
+);
+revealTargets.forEach(el => el.classList.add('reveal'));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+revealTargets.forEach(el => io.observe(el));
+
+// ============================================
+// Hero chat automation demo — the signature element.
+// Simulates a customer DM being answered and closed by the
+// automated sales flow, on a loop.
+// ============================================
+const thread = document.getElementById('chatThread');
+const status = document.getElementById('demoStatus');
+
+const script = [
+  { side: 'in',  text: 'سلام، این کیف هنوز موجوده؟' },
+  { side: 'out', text: 'سلام 🌿 بله، رنگ مشکی و قهوه‌ای موجوده. کدومو می‌خواید؟' },
+  { side: 'in',  text: 'مشکی. هزینه ارسال چقدره؟' },
+  { side: 'out', text: 'ارسال به سراسر کشور رایگانه. آدرستون رو بفرستید تا ثبت کنم.' },
+  { side: 'status', text: '✓ سفارش ثبت شد — بدون دخالت دستی' }
+];
+
+function typeStatus(text, cb) {
+  status.textContent = text;
+  setTimeout(cb, 900);
+}
+
+async function runDemo() {
+  thread.innerHTML = '';
+  status.textContent = 'در حال تحلیل پیام مشتری…';
+  await wait(1100);
+
+  for (const line of script) {
+    if (line.side === 'status') {
+      const el = document.createElement('div');
+      el.className = 'bubble bubble-status';
+      el.textContent = line.text;
+      thread.appendChild(el);
+      status.textContent = 'مکالمه بعدی در چند ثانیه دیگر…';
+      await wait(2600);
+      continue;
+    }
+    status.textContent = line.side === 'in' ? 'پیام جدید از مشتری…' : 'سیستم در حال پاسخ‌گویی…';
+    await wait(600);
+    const el = document.createElement('div');
+    el.className = `bubble bubble-${line.side}`;
+    el.textContent = line.text;
+    thread.appendChild(el);
+    await wait(1000);
+  }
+
+  await wait(1800);
+  runDemo();
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Respect reduced-motion users: show the final state once, no loop.
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (prefersReducedMotion) {
+  script.forEach(line => {
+    const el = document.createElement('div');
+    el.className = line.side === 'status' ? 'bubble bubble-status' : `bubble bubble-${line.side}`;
+    el.textContent = line.text;
+    el.style.opacity = 1;
+    el.style.transform = 'none';
+    thread.appendChild(el);
+  });
+  status.textContent = 'نمونه‌ای از مکالمه خودکار فروش';
+} else {
+  runDemo();
+}
+
+</script>
+</body>
+</html>

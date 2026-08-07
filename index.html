@@ -273,6 +273,13 @@ section{ padding:110px 0; position:relative; z-index:2; }
   border-radius:11px; background:var(--surface-2); color:var(--turquoise);
   font-size:1.2rem; margin-bottom:18px;
 }
+.service-icon-img{
+  width:64px; height:64px; background:transparent; border-radius:14px;
+  overflow:hidden;
+}
+.service-icon-img img{
+  width:100%; height:100%; object-fit:cover; border-radius:14px;
+}
 .service-card h3{ font-size:1.08rem; margin-bottom:10px; font-weight:700; }
 .service-card p{ color:var(--text-muted); font-size:.92rem; }
 
@@ -474,17 +481,17 @@ section{ padding:110px 0; position:relative; z-index:2; }
 
       <div class="service-grid">
         <article class="service-card">
-          <span class="service-icon">◎</span>
+          <span class="service-icon service-icon-img"><img src="images/icon-consulting.webp" alt="" loading="lazy"></span>
           <h3>مشاوره هوش مصنوعی</h3>
           <p>بررسی مسیر فروش فعلی شما و طراحی نقشه‌راه اتوماسیون، متناسب با نوع کسب‌وکار و بودجه.</p>
         </article>
         <article class="service-card">
-          <span class="service-icon">▨</span>
+          <span class="service-icon service-icon-img"><img src="images/icon-training.webp" alt="" loading="lazy"></span>
           <h3>آموزش تیم فروش</h3>
           <p>آموزش عملی استفاده از ابزارهای هوش مصنوعی به تیم شما، تا بدون وابستگی به من ادامه دهید.</p>
         </article>
         <article class="service-card">
-          <span class="service-icon">◫</span>
+          <span class="service-icon service-icon-img"><img src="images/icon-website.webp" alt="" loading="lazy"></span>
           <h3>طراحی وب‌سایت</h3>
           <p>وب‌سایت‌هایی سریع، مدرن و آماده برای فروش؛ با ساختاری که موتورهای جست‌وجو هم آن را می‌فهمند.</p>
         </article>

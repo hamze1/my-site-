@@ -300,26 +300,27 @@ section{ padding:110px 0; position:relative; z-index:2; }
 .process-item p{ color:var(--text-muted); font-size:.92rem; }
 
 /* ============================================
-   Nora
+   Kian
    ============================================ */
-.nora{ background:var(--surface-1); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-.nora-grid{ display:grid; grid-template-columns:.6fr 1.4fr; gap:56px; align-items:center; }
-.nora-frame{
+.kian{ background:var(--surface-1); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.kian-grid{ display:grid; grid-template-columns:.6fr 1.4fr; gap:56px; align-items:center; }
+.kian-frame{
   position:relative;
-  width:180px; height:180px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, var(--turquoise), var(--turquoise-dim) 70%);
-  display:flex; align-items:center; justify-content:center;
+  width:200px; height:200px; border-radius:50%;
+  overflow:hidden;
+  box-shadow:0 0 0 1px var(--border), 0 30px 60px -20px rgba(47,213,196,.35);
   margin:0 auto;
 }
-.nora-initial{ font-size:3.2rem; font-weight:800; color:#06120F; }
-.nora-pulse{
+.kian-photo{ width:100%; height:100%; object-fit:cover; display:block; }
+.kian-pulse{
   position:absolute; inset:-14px; border-radius:50%;
   border:1px solid var(--turquoise-dim);
   animation:ring 3s var(--ease) infinite;
+  pointer-events:none;
 }
 @keyframes ring{ 0%{ transform:scale(.9); opacity:.7; } 100%{ transform:scale(1.25); opacity:0; } }
-.nora-copy h2{ font-size:clamp(1.6rem,3vw,2.1rem); font-weight:800; margin-bottom:16px; }
-.nora-copy p{ color:var(--text-muted); max-width:560px; }
+.kian-copy h2{ font-size:clamp(1.6rem,3vw,2.1rem); font-weight:800; margin-bottom:16px; }
+.kian-copy p{ color:var(--text-muted); max-width:560px; }
 
 /* ============================================
    Work
@@ -352,7 +353,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
    Responsive
    ============================================ */
 @media (max-width: 900px){
-  .hero-grid, .nora-grid, .about-grid{ grid-template-columns:1fr; }
+  .hero-grid, .kian-grid, .about-grid{ grid-template-columns:1fr; }
   .about-photo{ max-width:340px; margin:0 auto; }
   .hero{ padding-top:140px; }
   .service-grid{ grid-template-columns:1fr 1fr; }
@@ -389,7 +390,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
     <nav class="nav" id="nav">
       <a href="#services">خدمات</a>
       <a href="#process">فرآیند کار</a>
-      <a href="#nora">نورا</a>
+      <a href="#kian">کیان</a>
       <a href="#work">نمونه‌کار</a>
       <a href="#contact" class="nav-cta">شروع همکاری</a>
     </nav>
@@ -560,21 +561,21 @@ section{ padding:110px 0; position:relative; z-index:2; }
     </div>
   </section>
 
-  <!-- NORA -->
-  <section class="nora" id="nora">
-    <div class="wrap nora-grid">
-      <div class="nora-visual" aria-hidden="true">
-        <div class="nora-frame">
-          <span class="nora-pulse"></span>
-          <span class="nora-initial">ن</span>
+  <!-- KIAN -->
+  <section class="kian" id="kian">
+    <div class="wrap kian-grid">
+      <div class="kian-visual" aria-hidden="true">
+        <div class="kian-frame">
+          <span class="kian-pulse"></span>
+          <img src="images/icon-kian.webp" alt="کیان، آواتار هوش مصنوعی" class="kian-photo">
         </div>
       </div>
-      <div class="nora-copy">
+      <div class="kian-copy">
         <p class="eyebrow">شخصیت هوش مصنوعی</p>
-        <h2>آشنا شوید با نورا</h2>
+        <h2>آشنا شوید با کیان</h2>
         <p>
-          نورا آواتار هوش‌مصنوعی‌ای است که برای آموزش دیجیتال مارکتینگ به زبان فارسی ساخته‌ام.
-          نورا نمونه‌ای زنده از همان تکنولوژی‌ای‌ست که برای مشتریانم پیاده‌سازی می‌کنم:
+          کیان آواتار هوش‌مصنوعی‌ای است که برای آموزش دیجیتال مارکتینگ به زبان فارسی ساخته‌ام.
+          کیان نمونه‌ای زنده از همان تکنولوژی‌ای‌ست که برای مشتریانم پیاده‌سازی می‌کنم:
           محتوایی که هر روز، بدون وقفه، مخاطب می‌سازد.
         </p>
       </div>
@@ -645,7 +646,7 @@ nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.cla
 // Scroll reveal
 // ============================================
 const revealTargets = document.querySelectorAll(
-  '.service-card, .process-item, .work-card, .nora-grid, .section-title, .contact-inner'
+  '.service-card, .process-item, .work-card, .kian-grid, .section-title, .contact-inner'
 );
 revealTargets.forEach(el => el.classList.add('reveal'));
 

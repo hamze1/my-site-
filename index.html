@@ -65,6 +65,14 @@ img{ max-width:100%; display:block; }
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+.scroll-progress{
+  position:fixed; top:0; right:0; left:auto;
+  height:3px; width:0%;
+  background:linear-gradient(90deg, var(--gold), var(--turquoise));
+  z-index:100;
+  transition:width .1s linear;
+}
+
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
 }
@@ -90,13 +98,14 @@ img{ max-width:100%; display:block; }
 .logo{ display:flex; align-items:center; gap:10px; font-family:var(--font-latin); }
 .logo-mark{
   position:relative;
-  width:34px; height:34px; border-radius:9px;
-  background:linear-gradient(155deg, var(--turquoise), var(--turquoise-dim));
-  color:#06120F;
+  width:38px; height:38px; border-radius:9px;
+  overflow:hidden;
   display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-latin); font-weight:700; font-size:1.05rem;
-  box-shadow:0 4px 14px -4px rgba(47,213,196,.55);
+  box-shadow:0 4px 16px -4px rgba(47,213,196,.55);
+  transition:transform .3s var(--ease);
 }
+.logo:hover .logo-mark{ transform:rotate(-6deg) scale(1.06); }
+.logo-mark img{ width:100%; height:100%; object-fit:cover; }
 .logo-spark{
   position:absolute; top:-3px; left:-3px;
   width:9px; height:9px; border-radius:50%;
@@ -126,7 +135,19 @@ img{ max-width:100%; display:block; }
 /* ============================================
    Hero
    ============================================ */
-.hero{ padding:168px 0 96px; position:relative; z-index:2; }
+.hero{ padding:168px 0 96px; position:relative; z-index:2; overflow:hidden; }
+.hero::before{
+  content:'';
+  position:absolute; top:-220px; left:50%;
+  width:900px; height:900px; margin-left:-450px;
+  background:radial-gradient(circle, rgba(47,213,196,.16), rgba(47,213,196,0) 65%);
+  pointer-events:none; z-index:-1;
+  animation:heroGlow 10s ease-in-out infinite;
+}
+@keyframes heroGlow{
+  0%,100%{ transform:scale(1) translateY(0); opacity:.9; }
+  50%{ transform:scale(1.12) translateY(30px); opacity:1; }
+}
 .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; }
 
 .eyebrow{
@@ -166,7 +187,8 @@ img{ max-width:100%; display:block; }
 .btn-lg{ padding:16px 36px; font-size:1rem; }
 
 /* --- hero live-chat demo (signature element) --- */
-.hero-demo{ position:relative; }
+.hero-demo{ position:relative; animation:floatY 6s ease-in-out infinite; }
+@keyframes floatY{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
 .demo-card{
   background:var(--surface-1);
   border:1px solid var(--border);
@@ -216,6 +238,7 @@ img{ max-width:100%; display:block; }
   overflow:hidden;
   border:1px solid var(--border);
   box-shadow:0 30px 70px -30px rgba(0,0,0,.6);
+  animation:floatY 7s ease-in-out infinite;
 }
 .about-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
 .about-copy h2{ font-size:clamp(1.6rem,3vw,2.1rem); font-weight:800; margin-bottom:16px; }
@@ -279,7 +302,9 @@ section{ padding:110px 0; position:relative; z-index:2; }
 }
 .service-icon-img img{
   width:100%; height:100%; object-fit:cover; border-radius:14px;
+  transition:transform .35s var(--ease);
 }
+.service-card:hover .service-icon-img img{ transform:scale(1.08) rotate(-3deg); }
 .service-card h3{ font-size:1.08rem; margin-bottom:10px; font-weight:700; }
 .service-card p{ color:var(--text-muted); font-size:.92rem; }
 
@@ -459,12 +484,13 @@ section{ padding:110px 0; position:relative; z-index:2; }
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
 <div class="noise-layer"></div>
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
     <a href="#top" class="logo">
-      <span class="logo-mark">K<span class="logo-spark" aria-hidden="true"></span></span>
+      <span class="logo-mark"><img src="images/logo-kyanai.webp" alt="Kyanai" width="38" height="38"><span class="logo-spark" aria-hidden="true"></span></span>
       <span class="logo-text">kyan<span class="logo-dot">ai</span></span>
     </a>
     <nav class="nav" id="nav">
@@ -759,6 +785,16 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const header = document.getElementById('site-header');
 window.addEventListener('scroll', () => {
   header.classList.toggle('scrolled', window.scrollY > 12);
+}, { passive: true });
+
+// ============================================
+// Scroll progress bar
+// ============================================
+const scrollProgress = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+  scrollProgress.style.width = pct + '%';
 }, { passive: true });
 
 // ============================================

@@ -480,12 +480,117 @@ section{ padding:110px 0; position:relative; z-index:2; }
   .chat-launcher, .chat-widget{ left:16px; bottom:16px; }
 }
 
+/* ============================================
+   Premium interaction layer
+   Glassmorphism, glow, 3D tilt, mouse-tracking light,
+   text reveal, parallax, micro-interactions.
+   ============================================ */
+
+/* --- glassmorphism on key surfaces --- */
+.service-card, .demo-card, .work-card, .chat-widget, .about-photo, .kian-frame, .nav{
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+}
+.service-card, .demo-card, .work-card{
+  background:linear-gradient(155deg, rgba(30,33,49,.72), rgba(23,25,38,.55));
+}
+
+/* --- 3D tilt containers: JS sets --rx/--ry, this applies them --- */
+.tilt{
+  transform-style:preserve-3d;
+  transform:perspective(900px) rotateX(var(--rx,0)) rotateY(var(--ry,0)) translateZ(0);
+  transition:transform .5s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  will-change:transform;
+}
+.tilt.tilt-active{ transition:transform .06s linear; }
+
+/* --- glow on hover for cards, buttons, icons --- */
+.service-card, .work-card, .demo-card{
+  position:relative;
+  box-shadow:0 0 0 rgba(47,213,196,0);
+}
+.service-card:hover, .work-card:hover{
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.55), 0 0 0 1px rgba(47,213,196,.18), 0 0 40px -12px rgba(47,213,196,.35);
+}
+.btn-primary{ box-shadow:0 0 0 rgba(47,213,196,0); }
+.btn-primary:hover{ box-shadow:0 8px 26px -6px rgba(47,213,196,.55); }
+.social-icon:hover{ box-shadow:0 0 0 4px rgba(47,213,196,.12); }
+.chat-launcher{ animation:launcherGlow 3.2s ease-in-out infinite; }
+@keyframes launcherGlow{
+  0%,100%{ box-shadow:0 14px 34px -10px rgba(47,213,196,.6); }
+  50%{ box-shadow:0 14px 46px -8px rgba(47,213,196,.85); }
+}
+
+/* --- mouse-tracking soft light (JS sets --mx/--my in %) --- */
+.mouse-glow{ position:relative; overflow:hidden; }
+.mouse-glow::after{
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(47,213,196,.14), transparent 70%);
+  opacity:0; transition:opacity .35s var(--ease);
+  pointer-events:none;
+}
+.mouse-glow:hover::after{ opacity:1; }
+
+/* --- text reveal on hero load --- */
+@keyframes textUp{
+  from{ opacity:0; transform:translateY(22px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.hero-copy .eyebrow{ animation:textUp .7s var(--ease) both; animation-delay:.05s; }
+.hero-copy h1{ animation:textUp .8s var(--ease) both; animation-delay:.15s; }
+.hero-lead{ animation:textUp .8s var(--ease) both; animation-delay:.28s; }
+.hero-actions{ animation:textUp .8s var(--ease) both; animation-delay:.4s; }
+.hero-demo{ animation:textUp .9s var(--ease) both, floatY 6s ease-in-out 1s infinite; animation-delay:.3s, 1s; }
+
+/* --- staggered card reveal (JS adds .reveal already; this adds per-index delay) --- */
+.service-card.reveal, .process-item.reveal{ transition-delay:var(--stagger, 0ms); }
+
+/* --- micro-interactions --- */
+.btn{ position:relative; overflow:hidden; }
+.btn:active{ transform:scale(.96); }
+.nav a:not(.nav-cta){ position:relative; }
+.nav a:not(.nav-cta)::after{
+  content:''; position:absolute; right:0; bottom:2px; width:0; height:1px;
+  background:var(--turquoise); transition:width .25s var(--ease);
+}
+.nav a:not(.nav-cta):hover::after{ width:100%; }
+.logo-mark, .social-icon, .service-icon-img{ transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
+.chat-widget-form input, .chat-widget-form textarea{ transition:box-shadow .25s, border-color .25s; }
+.chat-widget-form input:focus, .chat-widget-form textarea:focus{ box-shadow:0 0 0 3px rgba(47,213,196,.15); }
+
+/* --- animated ambient particles in background --- */
+.bg-particles{
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+}
+.bg-particles span{
+  position:absolute; width:3px; height:3px; border-radius:50%;
+  background:var(--turquoise); opacity:.35;
+  animation:particleDrift linear infinite;
+}
+@keyframes particleDrift{
+  0%{ transform:translateY(0) translateX(0); opacity:0; }
+  10%{ opacity:.5; }
+  90%{ opacity:.35; }
+  100%{ transform:translateY(-110vh) translateX(20px); opacity:0; }
+}
+
+@media (hover: none){
+  .tilt{ transform:none !important; }
+  .mouse-glow::after{ display:none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-copy .eyebrow, .hero-copy h1, .hero-lead, .hero-actions, .hero-demo{ animation:none !important; }
+  .bg-particles{ display:none; }
+}
+
 </style>
 </head>
 <body>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="noise-layer"></div>
+<div class="bg-particles" id="bgParticles"></div>
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
@@ -529,7 +634,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
       </div>
 
       <div class="hero-demo" aria-hidden="true">
-        <div class="demo-card">
+        <div class="demo-card tilt">
           <div class="demo-card-head">
             <span class="dot dot-live"></span>
             <span>مکالمه زنده در فروشگاه شما</span>
@@ -587,32 +692,32 @@ section{ padding:110px 0; position:relative; z-index:2; }
       <h2 class="section-title center">هرچه برای فروش آنلاین نیاز دارید</h2>
 
       <div class="service-grid">
-        <article class="service-card">
+        <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-consulting.webp" alt="" loading="lazy"></span>
           <h3>مشاوره هوش مصنوعی</h3>
           <p>بررسی مسیر فروش فعلی شما و طراحی نقشه‌راه اتوماسیون، متناسب با نوع کسب‌وکار و بودجه.</p>
         </article>
-        <article class="service-card">
+        <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-training.webp" alt="" loading="lazy"></span>
           <h3>آموزش تیم فروش</h3>
           <p>آموزش عملی استفاده از ابزارهای هوش مصنوعی به تیم شما، تا بدون وابستگی به من ادامه دهید.</p>
         </article>
-        <article class="service-card">
+        <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-website.webp" alt="" loading="lazy"></span>
           <h3>طراحی وب‌سایت</h3>
           <p>وب‌سایت‌هایی سریع، مدرن و آماده برای فروش؛ با ساختاری که موتورهای جست‌وجو هم آن را می‌فهمند.</p>
         </article>
-        <article class="service-card">
+        <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-app.webp" alt="" loading="lazy"></span>
           <h3>توسعه اپلیکیشن</h3>
           <p>اپلیکیشن موبایل اختصاصی برای کسب‌وکارهایی که می‌خواهند تجربه‌ای فراتر از یک وب‌سایت بسازند.</p>
         </article>
-        <article class="service-card">
+        <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-marketing.webp" alt="" loading="lazy"></span>
           <h3>دیجیتال مارکتینگ</h3>
           <p>کمپین‌های تبلیغاتی و محتوایی که مخاطب فارسی‌زبان را از دیدن آگهی تا خرید همراهی می‌کند.</p>
         </article>
-        <article class="service-card">
+        <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-automation.webp" alt="" loading="lazy"></span>
           <h3>اتوماسیون فروش</h3>
           <p>ربات‌های گفت‌وگوی هوشمند که پیام می‌گیرند، سوال جواب می‌دهند و سفارش را نهایی می‌کنند.</p>
@@ -693,7 +798,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
     <div class="wrap">
       <p class="eyebrow center">نمونه‌کار</p>
       <h2 class="section-title center">پروژه‌هایی که ساخته‌ام</h2>
-      <div class="work-card">
+      <div class="work-card tilt mouse-glow">
         <div class="work-info">
           <h3>پلتفرم آموزش برنامه‌نویسی و هوش مصنوعی</h3>
           <p>وب‌سایت آموزشی فارسی با طراحی راست‌به‌چپ، انیمیشن‌های اسکرول و افکت‌های سه‌بعدی روی کارت‌ها؛ ساخته‌شده برای مخاطب فارسی‌زبان علاقه‌مند به هوش مصنوعی.</p>
@@ -760,15 +865,9 @@ section{ padding:110px 0; position:relative; z-index:2; }
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M21.5 4.5 3.6 11.35c-1.22.48-1.21 1.15-.22 1.45l4.55 1.42 1.75 5.38c.2.58.36.8.73.8.37 0 .55-.17.77-.38l1.86-1.8 4.25 3.14c.78.44 1.34.21 1.54-.72l2.78-13.1c.3-1.24-.44-1.8-1.11-1.53zM8.9 13.5l9.14-5.75c.44-.27.83-.12.51.17L10.9 15.1l-.3 3.05z"/></svg>
       </a>
       <a href="#" target="_blank" rel="noopener" aria-label="بله" class="social-icon">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <defs>
-            <linearGradient id="baleGrad" x1="4" y1="20" x2="20" y2="4" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#2b3fa6"/>
-              <stop offset="1" stop-color="#2fd5c4"/>
-            </linearGradient>
-          </defs>
-          <path d="M12 2c5.52 0 10 4.03 10 9s-4.48 9-10 9c-1.02 0-2-.13-2.93-.38-.98.63-2.5 1.4-4.2 1.75a.3.3 0 0 1-.34-.4c.63-1.05.93-2.28 1.05-3.14C3.65 16.24 2 13.8 2 11c0-4.97 4.48-9 10-9z" fill="url(#baleGrad)"/>
-          <path d="M7.6 12.3l2.7 2.7 5.6-5.6" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2c5.52 0 10 4.03 10 9s-4.48 9-10 9c-1.02 0-2-.13-2.93-.38-.98.63-2.5 1.4-4.2 1.75a.3.3 0 0 1-.34-.4c.63-1.05.93-2.28 1.05-3.14C3.65 16.24 2 13.8 2 11c0-4.97 4.48-9 10-9z"/>
+          <path d="M7.6 12.3l2.7 2.7 5.6-5.6"/>
         </svg>
       </a>
       <a href="https://wa.me/98XXXXXXXXXX" target="_blank" rel="noopener" aria-label="واتساپ" class="social-icon">
@@ -778,13 +877,13 @@ section{ padding:110px 0; position:relative; z-index:2; }
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.44-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.11 20.45H3.56V9h3.55v11.45z"/></svg>
       </a>
       <a href="#" target="_blank" rel="noopener" aria-label="آپارات" class="social-icon">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <circle cx="12" cy="12" r="10" fill="#ec1561"/>
-          <circle cx="8.3" cy="8.3" r="2.7" fill="#fff"/>
-          <circle cx="15.7" cy="8.3" r="2.7" fill="#fff"/>
-          <circle cx="8.3" cy="15.7" r="2.7" fill="#fff"/>
-          <circle cx="15.7" cy="15.7" r="2.7" fill="#fff"/>
-          <circle cx="12" cy="12" r="1.15" fill="#fff"/>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <circle cx="8.6" cy="8.6" r="1.9"/>
+          <circle cx="15.4" cy="8.6" r="1.9"/>
+          <circle cx="8.6" cy="15.4" r="1.9"/>
+          <circle cx="15.4" cy="15.4" r="1.9"/>
+          <circle cx="12" cy="12" r=".9" fill="currentColor" stroke="none"/>
         </svg>
       </a>
       <a href="#" target="_blank" rel="noopener" aria-label="یوتیوب" class="social-icon">
@@ -975,6 +1074,75 @@ widgetForm.addEventListener('submit', (e) => {
 
   widgetForm.reset();
 });
+
+// ============================================
+// Premium interaction layer
+// ============================================
+const canHover = window.matchMedia('(hover: hover)').matches;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// --- 3D tilt on cards ---
+if (canHover && !reducedMotion) {
+  document.querySelectorAll('.tilt').forEach(card => {
+    const maxTilt = 7;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      const ry = (px - 0.5) * maxTilt * 2;
+      const rx = (0.5 - py) * maxTilt * 2;
+      card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      card.classList.add('tilt-active');
+      if (card.classList.contains('mouse-glow')) {
+        card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+      card.classList.remove('tilt-active');
+    });
+  });
+}
+
+// --- staggered entrance delay for grids ---
+document.querySelectorAll('.service-grid').forEach(grid => {
+  [...grid.children].forEach((child, i) => {
+    child.style.setProperty('--stagger', (i * 70) + 'ms');
+  });
+});
+document.querySelectorAll('.process-list').forEach(list => {
+  [...list.children].forEach((child, i) => {
+    child.style.setProperty('--stagger', (i * 60) + 'ms');
+  });
+});
+
+// --- subtle parallax on hero text column ---
+if (!reducedMotion) {
+  const heroCopy = document.querySelector('.hero-copy');
+  window.addEventListener('scroll', () => {
+    if (!heroCopy || window.scrollY > 700) return;
+    const y = Math.min(window.scrollY * 0.08, 40);
+    heroCopy.style.transform = `translateY(${y}px)`;
+  }, { passive: true });
+}
+
+// --- ambient background particles ---
+if (!reducedMotion) {
+  const particleHost = document.getElementById('bgParticles');
+  const count = window.innerWidth < 700 ? 10 : 20;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('span');
+    p.style.left = Math.random() * 100 + '%';
+    p.style.bottom = '-10px';
+    p.style.animationDuration = (14 + Math.random() * 12) + 's';
+    p.style.animationDelay = (Math.random() * 14) + 's';
+    p.style.opacity = (0.2 + Math.random() * 0.3).toFixed(2);
+    particleHost.appendChild(p);
+  }
+}
 
 </script>
 </body>

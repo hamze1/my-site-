@@ -358,6 +358,76 @@ section{ padding:110px 0; position:relative; z-index:2; }
 .work-info h3{ font-size:1.2rem; margin-bottom:12px; }
 .work-info p{ color:var(--text-muted); max-width:640px; margin-bottom:16px; }
 .work-tag{ font-family:var(--font-latin); font-size:.78rem; color:var(--turquoise); letter-spacing:.04em; }
+.work-grid{ display:grid; grid-template-columns:1fr; gap:22px; }
+.work-result{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+.work-result span{
+  font-family:var(--font-latin); font-size:.78rem; color:var(--turquoise);
+  background:var(--surface-2); border:1px solid var(--border); border-radius:100px;
+  padding:6px 14px;
+}
+.work-card.is-placeholder{ opacity:.6; border-style:dashed; text-align:center; padding:34px; }
+.work-card.is-placeholder p{ margin:0; }
+
+/* ============================================
+   Problem / Solution
+   ============================================ */
+.problem-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:900px; margin:0 auto; }
+.problem-col{
+  border-radius:var(--radius); padding:28px 26px; border:1px solid var(--border);
+}
+.problem-col--bad{ background:rgba(217,90,90,.06); border-color:rgba(217,90,90,.25); }
+.problem-col--good{ background:rgba(47,213,196,.06); border-color:var(--turquoise-dim); }
+.problem-heading{ font-size:1rem; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.problem-col--bad .problem-heading{ color:#E28A8A; }
+.problem-col--good .problem-heading{ color:var(--turquoise); }
+.problem-list{ display:flex; flex-direction:column; gap:12px; }
+.problem-list li{ display:flex; gap:10px; align-items:flex-start; color:var(--text-muted); font-size:.92rem; }
+.problem-list li::before{ content:''; min-width:6px; height:6px; border-radius:50%; margin-top:8px; }
+.problem-col--bad .problem-list li::before{ background:#E28A8A; }
+.problem-col--good .problem-list li::before{ background:var(--turquoise); }
+
+/* ============================================
+   Mid-page lead magnet
+   ============================================ */
+.lead-magnet{ padding:0; }
+.lead-magnet-card{
+  max-width:920px; margin:0 auto; border-radius:var(--radius);
+  border:1px solid var(--turquoise-dim);
+  background:linear-gradient(120deg, rgba(47,213,196,.1), rgba(216,174,94,.05));
+  padding:38px 34px; display:flex; align-items:center; justify-content:space-between;
+  gap:26px; flex-wrap:wrap;
+}
+.lead-magnet-copy h3{ font-size:1.15rem; margin-bottom:8px; }
+.lead-magnet-copy p{ color:var(--text-muted); font-size:.92rem; max-width:460px; }
+.lead-magnet .btn{ white-space:nowrap; }
+
+/* ============================================
+   Why KyanAI
+   ============================================ */
+.why-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
+.why-card{ text-align:center; padding:26px 18px; }
+.why-num{
+  font-family:var(--font-latin); font-weight:700; color:var(--turquoise);
+  font-size:1.6rem; margin-bottom:10px;
+}
+.why-card h3{ font-size:.98rem; margin-bottom:8px; }
+.why-card p{ color:var(--text-muted); font-size:.86rem; }
+
+.service-meta{
+  margin-top:16px; padding-top:14px; border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:.78rem; color:var(--text-muted); font-family:var(--font-latin);
+}
+.service-meta a{ color:var(--turquoise); font-weight:600; }
+
+@media (max-width:900px){
+  .problem-grid{ grid-template-columns:1fr; }
+  .why-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:600px){
+  .why-grid{ grid-template-columns:1fr; }
+  .lead-magnet-card{ padding:28px 22px; text-align:center; justify-content:center; }
+}
 
 /* ============================================
    Contact
@@ -685,6 +755,34 @@ section{ padding:110px 0; position:relative; z-index:2; }
     </div>
   </section>
 
+  <!-- PROBLEM / SOLUTION -->
+  <section class="problem" id="problem">
+    <div class="wrap">
+      <p class="eyebrow center">چالش واقعی</p>
+      <h2 class="section-title center">چرا بیشتر فروشگاه‌های آنلاین مشتری از دست می‌دهند؟</h2>
+      <div class="problem-grid">
+        <div class="problem-col problem-col--bad reveal">
+          <h3 class="problem-heading">وضعیت بدون Kyanai</h3>
+          <ul class="problem-list">
+            <li>پیام مشتری ساعت‌ها بدون پاسخ می‌ماند</li>
+            <li>سوالات تکراری وقت شما را می‌گیرد</li>
+            <li>سفارش‌ها بین چت و دفترچه گم می‌شوند</li>
+            <li>بعد از ساعت کاری، فروش کاملاً متوقف می‌شود</li>
+          </ul>
+        </div>
+        <div class="problem-col problem-col--good reveal">
+          <h3 class="problem-heading">وضعیت با Kyanai</h3>
+          <ul class="problem-list">
+            <li>پاسخ فوری و ۲۴ ساعته، بدون تاخیر</li>
+            <li>سیستم خودکار به سوالات پرتکرار جواب می‌دهد</li>
+            <li>هر سفارش به‌طور خودکار ثبت و پیگیری می‌شود</li>
+            <li>فروش حتی نیمه‌شب هم برای شما ادامه دارد</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SERVICES -->
   <section class="services" id="services">
     <div class="wrap">
@@ -696,32 +794,51 @@ section{ padding:110px 0; position:relative; z-index:2; }
           <span class="service-icon service-icon-img"><img src="images/icon-consulting.webp" alt="" loading="lazy"></span>
           <h3>مشاوره هوش مصنوعی</h3>
           <p>بررسی مسیر فروش فعلی شما و طراحی نقشه‌راه اتوماسیون، متناسب با نوع کسب‌وکار و بودجه.</p>
+          <div class="service-meta"><span>تحویل: ۳-۵ روز</span><a href="#contact">شروع پروژه ←</a></div>
         </article>
         <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-training.webp" alt="" loading="lazy"></span>
           <h3>آموزش تیم فروش</h3>
           <p>آموزش عملی استفاده از ابزارهای هوش مصنوعی به تیم شما، تا بدون وابستگی به من ادامه دهید.</p>
+          <div class="service-meta"><span>تحویل: ۱ هفته</span><a href="#contact">شروع پروژه ←</a></div>
         </article>
         <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-website.webp" alt="" loading="lazy"></span>
           <h3>طراحی وب‌سایت</h3>
           <p>وب‌سایت‌هایی سریع، مدرن و آماده برای فروش؛ با ساختاری که موتورهای جست‌وجو هم آن را می‌فهمند.</p>
+          <div class="service-meta"><span>تحویل: ۱-۲ هفته</span><a href="#contact">شروع پروژه ←</a></div>
         </article>
         <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-app.webp" alt="" loading="lazy"></span>
           <h3>توسعه اپلیکیشن</h3>
           <p>اپلیکیشن موبایل اختصاصی برای کسب‌وکارهایی که می‌خواهند تجربه‌ای فراتر از یک وب‌سایت بسازند.</p>
+          <div class="service-meta"><span>تحویل: توافقی</span><a href="#contact">شروع پروژه ←</a></div>
         </article>
         <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-marketing.webp" alt="" loading="lazy"></span>
           <h3>دیجیتال مارکتینگ</h3>
           <p>کمپین‌های تبلیغاتی و محتوایی که مخاطب فارسی‌زبان را از دیدن آگهی تا خرید همراهی می‌کند.</p>
+          <div class="service-meta"><span>تحویل: ماهانه</span><a href="#contact">شروع پروژه ←</a></div>
         </article>
         <article class="service-card tilt mouse-glow">
           <span class="service-icon service-icon-img"><img src="images/icon-automation.webp" alt="" loading="lazy"></span>
           <h3>اتوماسیون فروش</h3>
           <p>ربات‌های گفت‌وگوی هوشمند که پیام می‌گیرند، سوال جواب می‌دهند و سفارش را نهایی می‌کنند.</p>
+          <div class="service-meta"><span>تحویل: ۱-۲ هفته</span><a href="#contact">شروع پروژه ←</a></div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MID-PAGE LEAD MAGNET -->
+  <section class="lead-magnet">
+    <div class="wrap">
+      <div class="lead-magnet-card reveal">
+        <div class="lead-magnet-copy">
+          <h3>هنوز مطمئن نیستید از کجا شروع کنید؟</h3>
+          <p>چک‌لیست رایگان «۷ نشانه که فروشگاه شما به اتوماسیون نیاز دارد» را در واتساپ برایتان می‌فرستم — بدون هیچ تعهدی.</p>
+        </div>
+        <a href="https://wa.me/98XXXXXXXXXX?text=سلام%2C%20چک‌لیست%20رایگان%20رو%20می‌خوام" target="_blank" rel="noopener" class="btn btn-primary">دریافت چک‌لیست رایگان</a>
       </div>
     </div>
   </section>
@@ -793,16 +910,52 @@ section{ padding:110px 0; position:relative; z-index:2; }
     </div>
   </section>
 
+  <!-- WHY KYANAI -->
+  <section class="why">
+    <div class="wrap">
+      <p class="eyebrow center">چرا Kyanai</p>
+      <h2 class="section-title center">تفاوت Kyanai با یک آژانس معمولی</h2>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-num">۰۱</div>
+          <h3>یک سیستم، نه چند ابزار پراکنده</h3>
+          <p>وب‌سایت، چت‌بات، CRM و تبلیغات همه در یک مسیر واحد طراحی می‌شوند، نه جدا از هم.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-num">۰۲</div>
+          <h3>کاملاً فارسی و بومی</h3>
+          <p>گفتگو، محتوا و پشتیبانی مخصوص مخاطب و کسب‌وکار فارسی‌زبان طراحی شده‌اند.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-num">۰۳</div>
+          <h3>کار مستقیم با بنیان‌گذار</h3>
+          <p>پروژه شما بین چند تیم دست‌به‌دست نمی‌شود؛ مستقیم با من پیش می‌رود.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-num">۰۴</div>
+          <h3>راه‌اندازی سریع</h3>
+          <p>نسخه اول سیستم شما در کمتر از ۲ هفته آماده و قابل تست است.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- WORK -->
   <section class="work" id="work">
     <div class="wrap">
       <p class="eyebrow center">نمونه‌کار</p>
       <h2 class="section-title center">پروژه‌هایی که ساخته‌ام</h2>
-      <div class="work-card tilt mouse-glow">
-        <div class="work-info">
-          <h3>پلتفرم آموزش برنامه‌نویسی و هوش مصنوعی</h3>
-          <p>وب‌سایت آموزشی فارسی با طراحی راست‌به‌چپ، انیمیشن‌های اسکرول و افکت‌های سه‌بعدی روی کارت‌ها؛ ساخته‌شده برای مخاطب فارسی‌زبان علاقه‌مند به هوش مصنوعی.</p>
-          <span class="work-tag">RTL · انیمیشن اسکرول · آموزش آنلاین</span>
+      <div class="work-grid">
+        <div class="work-card tilt mouse-glow">
+          <div class="work-info">
+            <h3>پلتفرم آموزش برنامه‌نویسی و هوش مصنوعی</h3>
+            <p>وب‌سایت آموزشی فارسی با طراحی راست‌به‌چپ، انیمیشن‌های اسکرول و افکت‌های سه‌بعدی روی کارت‌ها؛ ساخته‌شده برای مخاطب فارسی‌زبان علاقه‌مند به هوش مصنوعی.</p>
+            <span class="work-tag">RTL · انیمیشن اسکرول · آموزش آنلاین</span>
+            <!-- TODO: وقتی نتیجه واقعی داشتی (مثلا نرخ پاسخ‌گویی یا زمان ساخت) اینجا با .work-result اضافه کن -->
+          </div>
+        </div>
+        <div class="work-card is-placeholder reveal">
+          <p>پروژه بعدی شما اینجا نمایش داده می‌شود ↗</p>
         </div>
       </div>
     </div>
@@ -933,7 +1086,7 @@ nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.cla
 // Scroll reveal
 // ============================================
 const revealTargets = document.querySelectorAll(
-  '.service-card, .process-item, .work-card, .kian-grid, .section-title, .contact-inner'
+  '.service-card, .process-item, .work-card, .kian-grid, .section-title, .contact-inner, .problem-col, .lead-magnet-card, .why-card'
 );
 revealTargets.forEach(el => el.classList.add('reveal'));
 

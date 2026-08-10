@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KyanAI | اتوماسیون فروش با هوش مصنوعی</title>
 <meta name="description" content="حمزه — طراحی و پیاده‌سازی سیستم‌های اتوماسیون فروش مبتنی بر هوش مصنوعی برای کسب‌وکارهای فارسی‌زبان">
+<link rel="canonical" href="https://kyanai.ir/">
+<meta name="theme-color" content="#0D0E17">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kyanai.ir/">
+<meta property="og:title" content="KyanAI | اتوماسیون فروش با هوش مصنوعی">
+<meta property="og:description" content="طراحی و پیاده‌سازی سیستم‌های اتوماسیون فروش مبتنی بر هوش مصنوعی برای کسب‌وکارهای فارسی‌زبان — پاسخ‌گویی ۲۴ ساعته، بدون کد نویسی اضافه.">
+<meta property="og:image" content="https://kyanai.ir/images/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fa_IR">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KyanAI | اتوماسیون فروش با هوش مصنوعی">
+<meta name="twitter:description" content="طراحی و پیاده‌سازی سیستم‌های اتوماسیون فروش مبتنی بر هوش مصنوعی برای کسب‌وکارهای فارسی‌زبان">
+<meta name="twitter:image" content="https://kyanai.ir/images/og-cover.jpg">
+
+<link rel="icon" type="image/webp" href="images/logo-kyanai.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -430,6 +450,30 @@ section{ padding:110px 0; position:relative; z-index:2; }
 }
 
 /* ============================================
+   FAQ
+   ============================================ */
+.faq-list{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+.faq-item{
+  border:1px solid var(--border); border-radius:16px; background:var(--surface-1);
+  overflow:hidden; transition:border-color .25s var(--ease);
+}
+.faq-item.is-open{ border-color:var(--turquoise-dim); }
+.faq-q{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:20px 22px; background:none; border:none; cursor:pointer; text-align:right;
+  font-family:inherit; font-size:.98rem; font-weight:600; color:var(--text);
+}
+.faq-q svg{ flex:none; color:var(--turquoise); transition:transform .3s var(--ease); }
+.faq-item.is-open .faq-q svg{ transform:rotate(180deg); }
+.faq-a{
+  max-height:0; opacity:0; overflow:hidden;
+  transition:max-height .35s var(--ease), opacity .25s var(--ease), padding .35s var(--ease);
+  padding:0 22px;
+}
+.faq-item.is-open .faq-a{ max-height:220px; opacity:1; padding:0 22px 20px; }
+.faq-a p{ color:var(--text-muted); font-size:.9rem; line-height:1.9; margin:0; }
+
+/* ============================================
    Contact
    ============================================ */
 .contact-inner{ text-align:center; }
@@ -730,7 +774,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
   <section class="about" id="about">
     <div class="wrap about-grid">
       <div class="about-photo">
-        <img src="hamza.png" alt="حمزه، بنیان‌گذار Kyanai" loading="lazy">
+        <img src="images/hamza.webp" alt="حمزه، بنیان‌گذار Kyanai" loading="lazy" width="640" height="640">
       </div>
       <div class="about-copy">
         <p class="eyebrow">درباره من</p>
@@ -971,6 +1015,51 @@ section{ padding:110px 0; position:relative; z-index:2; }
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <p class="eyebrow center">سوالات پرتکرار</p>
+      <h2 class="section-title center">قبل از شروع، این سوالات را جواب می‌دهم</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>هزینه همکاری با Kyanai چقدر است؟</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><p>هزینه بر اساس نیاز واقعی کسب‌وکار شما (تعداد پیام، پیچیدگی سیستم، تعداد سرویس) مشخص می‌شود؛ به همین دلیل ابتدا یک مشاوره رایگان برگزار می‌کنیم تا دقیق‌ترین پیشنهاد قیمت را دریافت کنید.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>راه‌اندازی سیستم چقدر طول می‌کشد؟</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><p>بسته به نوع خدمت، معمولاً بین ۳ روز تا ۲ هفته. نسخه اول سیستم اتوماسیون شما زودتر از این آماده و قابل تست است تا مطمئن شوید مسیر درستی طی می‌شود.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>نیازی به دانش فنی از طرف من هست؟</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><p>خیر. طراحی، پیاده‌سازی و آموزش استفاده از سیستم به عهده من است؛ شما فقط کسب‌وکارتان را می‌شناسید، بقیه‌اش با من.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>اگر از نتیجه راضی نبودم چه می‌شود؟</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><p>قبل از شروع هر پروژه، دامنه کار و انتظارات به‌طور شفاف مشخص می‌شود تا هر دو طرف روی نتیجه توافق داشته باشیم؛ در طول مسیر هم بازخورد شما مستقیماً در طراحی اعمال می‌شود.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>آیا فقط برای فروشگاه‌های آنلاین مناسب است؟</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><p>نه، هر کسب‌وکاری که پیام مشتری از طریق واتساپ، اینستاگرام یا سایت دریافت می‌کند — از فروشگاه گرفته تا خدمات و آموزش — می‌تواند از این سیستم استفاده کند.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="wrap contact-inner">
@@ -1091,6 +1180,24 @@ window.addEventListener('scroll', () => {
   const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
   scrollProgress.style.width = pct + '%';
 }, { passive: true });
+
+// ============================================
+// FAQ accordion
+// ============================================
+document.querySelectorAll('.faq-item').forEach((item) => {
+  const btn = item.querySelector('.faq-q');
+  btn.addEventListener('click', () => {
+    const willOpen = !item.classList.contains('is-open');
+    document.querySelectorAll('.faq-item.is-open').forEach((openItem) => {
+      openItem.classList.remove('is-open');
+      openItem.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (willOpen) {
+      item.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
 
 // ============================================
 // Footer: reveal extra social networks

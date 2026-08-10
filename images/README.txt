@@ -1,4 +1,5 @@
-آیکن‌های سرویس‌ها (فرمت WebP، سبک‌شده برای وب):
+آیکن‌ها و لوگو (فرمت WebP، سبک‌شده برای وب):
+- logo-kyanai.webp      → لوگوی حرف K در هدر سایت
 - icon-consulting.webp  → مشاوره هوش مصنوعی
 - icon-training.webp    → آموزش تیم فروش
 - icon-website.webp     → طراحی وب‌سایت

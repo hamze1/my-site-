@@ -454,6 +454,25 @@ section{ padding:110px 0; position:relative; z-index:2; }
 }
 
 /* ============================================
+   App promo
+   ============================================ */
+.app-promo-card{
+  max-width:920px; margin:0 auto; border-radius:var(--radius);
+  border:1px solid var(--turquoise-dim);
+  background:linear-gradient(120deg, rgba(216,174,94,.08), rgba(47,213,196,.06));
+  padding:36px 34px; display:flex; align-items:center; justify-content:space-between;
+  gap:26px; flex-wrap:wrap;
+}
+.app-promo-copy p.eyebrow{ text-align:right; margin-bottom:6px; }
+.app-promo-copy h3{ font-size:1.15rem; margin-bottom:8px; }
+.app-promo-copy p{ color:var(--text-muted); font-size:.92rem; max-width:480px; }
+.app-promo .btn{ white-space:nowrap; }
+@media (max-width:600px){
+  .app-promo-card{ padding:26px 22px; text-align:center; justify-content:center; }
+  .app-promo-copy p{ max-width:none; }
+}
+
+/* ============================================
    FAQ
    ============================================ */
 .faq-list{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
@@ -1045,6 +1064,20 @@ section{ padding:110px 0; position:relative; z-index:2; }
     </div>
   </section>
 
+  <!-- APP PROMO -->
+  <section class="app-promo">
+    <div class="wrap">
+      <div class="app-promo-card reveal">
+        <div class="app-promo-copy">
+          <p class="eyebrow">اپلیکیشن</p>
+          <h3>دستیار Kyanai — نسخه اپلیکیشن</h3>
+          <p>چت هوشمند، مدیریت لید و محاسبه‌گر صرفه‌جویی، حالا در قالب یک اپلیکیشن قابل نصب. همین حالا مستقیم امتحانش کنید — به‌زودی در بازار و گوگل‌پلی هم در دسترس خواهد بود.</p>
+        </div>
+        <a href="app/index.html" target="_blank" rel="noopener" class="btn btn-primary">مشاهده و نصب اپ ←</a>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ -->
   <section class="faq" id="faq">
     <div class="wrap">
@@ -1253,7 +1286,7 @@ nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.cla
 // Scroll reveal
 // ============================================
 const revealTargets = document.querySelectorAll(
-  '.service-card, .process-item, .work-card, .kian-grid, .section-title, .contact-inner, .problem-col, .lead-magnet-card, .why-card'
+  '.service-card, .process-item, .work-card, .kian-grid, .section-title, .contact-inner, .problem-col, .lead-magnet-card, .why-card, .app-promo-card'
 );
 revealTargets.forEach(el => el.classList.add('reveal'));
 

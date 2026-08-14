@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>اپ آموزش هوشمند</title>
+<meta name="description" content="دوره‌های آموزشی، آزمون تعاملی، دستیار خلاصه‌سازی با هوش مصنوعی و پیگیری پیشرفت یادگیری" />
+<meta name="theme-color" content="#0D0E17" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #08090f; font-family: 'Vazirmatn','Segoe UI',Tahoma,sans-serif; height: 100%; }
+  #root { min-height: 100vh; }
+
+  .lrn-shell {
+    min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 20% 20%, rgba(47,213,196,0.08), transparent 45%), radial-gradient(circle at 80% 85%, rgba(216,174,94,0.06), transparent 45%), #08090f;
+    padding: 24px 12px;
+  }
+  .lrn-phone {
+    width: 390px; height: min(844px, 96vh); max-width: 100%;
+    background: linear-gradient(180deg, #0D0E17 0%, #151827 100%);
+    border-radius: 40px; border: 10px solid #05060a;
+    box-shadow: 0 0 0 1px rgba(47,213,196,0.15), 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(47,213,196,0.08);
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+  }
+  .lrn-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 22px; background: #05060a; border-radius: 0 0 16px 16px; z-index: 20; }
+  .lrn-status { display: flex; justify-content: space-between; align-items: center; padding: 14px 22px 4px; font-size: 13px; color: #9DA3B8; direction: ltr; }
+  .lrn-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .lrn-topbar { padding: 10px 20px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .lrn-topbar-icon { width: 38px; height: 38px; border-radius: 12px; overflow: hidden; padding: 0; background: linear-gradient(135deg, rgba(47,213,196,0.18), rgba(216,174,94,0.12)); border: 1px solid rgba(47,213,196,0.3); display: flex; align-items: center; justify-content: center; color: #2FD5C4; flex-shrink: 0; }
+  .lrn-topbar-title { color: #F0F2F8; font-weight: 700; font-size: 15px; }
+  .lrn-topbar-sub { color: #7F869C; font-size: 12px; margin-top: 1px; }
+
+  .lrn-screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
+  .lrn-screen.active { display: flex; }
+  .lrn-scroll { flex: 1; overflow-y: auto; padding: 16px; }
+
+  /* courses */
+  .lrn-course-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; margin-bottom: 10px; cursor: pointer; }
+  .lrn-course-head { display: flex; justify-content: space-between; align-items: center; }
+  .lrn-course-title { color: #F0F2F8; font-weight: 700; font-size: 13.5px; }
+  .lrn-course-sub { color: #7F869C; font-size: 11.5px; margin-top: 3px; }
+  .lrn-progress-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 100px; margin-top: 10px; overflow: hidden; }
+  .lrn-progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #2FD5C4, #D8AE5E); }
+  .lrn-progress-pct { font-size: 11px; color: #2FD5C4; font-family: monospace; font-weight: 700; }
+  .lrn-lesson-list { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.07); display: none; }
+  .lrn-course-card.open .lrn-lesson-list { display: block; }
+  .lrn-lesson-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; font-size: 12px; color: #C7CBDA; }
+  .lrn-lesson-row.done { color: #2FD5C4; }
+
+  /* quiz */
+  .lrn-quiz-progress { display: flex; gap: 6px; padding: 0 16px 14px; }
+  .lrn-quiz-dot { flex: 1; height: 4px; border-radius: 100px; background: rgba(255,255,255,0.1); }
+  .lrn-quiz-dot.filled { background: #2FD5C4; }
+  .lrn-quiz-question { font-size: 15px; font-weight: 700; color: #F0F2F8; line-height: 1.8; margin-bottom: 18px; }
+  .lrn-quiz-option { width: 100%; text-align: right; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 14px; color: #E7E9F2; font-family: inherit; font-size: 12.5px; margin-bottom: 10px; cursor: pointer; }
+  .lrn-quiz-option.correct { background: rgba(47,213,196,0.14); border-color: #2FD5C4; color: #2FD5C4; }
+  .lrn-quiz-option.wrong { background: rgba(226,138,138,0.12); border-color: #E28A8A; color: #E28A8A; }
+  .lrn-quiz-next { width: 100%; padding: 11px; border-radius: 12px; border: none; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; background: linear-gradient(135deg, #2FD5C4, #23A99B); color: #08110F; margin-top: 8px; }
+  .lrn-quiz-result { text-align: center; padding: 30px 10px; }
+  .lrn-quiz-result-num { font-size: 42px; font-weight: 800; color: #2FD5C4; font-family: monospace; }
+  .lrn-quiz-result-label { color: #9DA3B8; font-size: 12.5px; margin-top: 8px; }
+
+  /* AI assistant */
+  .lrn-textarea { width: 100%; min-height: 90px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: #E7E9F2; font-family: inherit; font-size: 12.5px; outline: none; resize: none; margin-bottom: 12px; }
+  .lrn-ai-actions { display: flex; gap: 8px; margin-bottom: 4px; }
+  .lrn-ai-btn { flex: 1; padding: 11px; border-radius: 12px; border: 1px solid rgba(47,213,196,0.35); font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; background: rgba(47,213,196,0.1); color: #2FD5C4; }
+  .lrn-result-box { background: rgba(47,213,196,0.06); border: 1px solid rgba(47,213,196,0.25); border-radius: 14px; padding: 14px; margin-top: 14px; font-size: 12.5px; line-height: 2; color: #E7E9F2; white-space: pre-line; }
+  .lrn-loading { display: flex; align-items: center; gap: 8px; color: #7F869C; font-size: 12px; margin-top: 14px; }
+  .lrn-spinner { width: 14px; height: 14px; border: 2px solid rgba(47,213,196,0.25); border-top-color: #2FD5C4; border-radius: 50%; animation: lrnspin .8s linear infinite; }
+  @keyframes lrnspin { to { transform: rotate(360deg); } }
+
+  /* progress */
+  .lrn-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .lrn-stat-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px 8px; text-align: center; }
+  .lrn-stat-num { font-size: 17px; font-weight: 800; color: #F0F2F8; font-family: monospace; }
+  .lrn-stat-label { font-size: 10px; color: #7F869C; margin-top: 4px; }
+  .lrn-panel { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; }
+  .lrn-panel-title { font-size: 13px; font-weight: 700; color: #F0F2F8; margin-bottom: 12px; }
+  .lrn-week-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .lrn-week-label { font-size: 11.5px; color: #C7CBDA; width: 60px; flex-shrink: 0; }
+  .lrn-week-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 100px; overflow: hidden; }
+  .lrn-week-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #2FD5C4, #D8AE5E); }
+
+  .lrn-cta-bar { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; background: linear-gradient(135deg, #2FD5C4, #23A99B); color: #08110F; font-weight: 700; font-size: 13px; text-decoration: none; margin: 0 16px 12px; border-radius: 100px; }
+
+  .lrn-bottomnav { display: flex; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(8,9,15,0.6); padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px); }
+  .lrn-navbtn { flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; cursor: pointer; color: #6B7186; font-family: inherit; }
+  .lrn-navbtn.active { color: #2FD5C4; }
+  .lrn-navbtn .icon { display: flex; }
+  .lrn-navbtn .label { font-size: 9.5px; font-weight: 500; }
+  .lrn-navbtn.active .label { font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="lrn-shell">
+    <div class="lrn-phone">
+      <div class="lrn-notch"></div>
+      <div class="lrn-status">
+        <span>9:41</span>
+        <span style="display:flex;gap:4px;"><span style="opacity:.8">4G</span><span>●●●</span></span>
+      </div>
+      <div class="lrn-body">
+
+        <!-- COURSES -->
+        <section class="lrn-screen active" id="screen-courses">
+          <div class="lrn-topbar">
+            <div class="lrn-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="lrn-topbar-title">دوره‌های من</div>
+              <div class="lrn-topbar-sub">ادامه یادگیری از همان‌جا که رها کردید</div>
+            </div>
+          </div>
+          <div class="lrn-scroll" id="courses-list"></div>
+        </section>
+
+        <!-- QUIZ -->
+        <section class="lrn-screen" id="screen-quiz">
+          <div class="lrn-topbar">
+            <div class="lrn-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="lrn-topbar-title">آزمون</div>
+              <div class="lrn-topbar-sub">مفاهیم پایه برنامه‌نویسی و AI</div>
+            </div>
+          </div>
+          <div class="lrn-quiz-progress" id="quiz-progress"></div>
+          <div class="lrn-scroll" id="quiz-body"></div>
+        </section>
+
+        <!-- AI ASSISTANT -->
+        <section class="lrn-screen" id="screen-ai">
+          <div class="lrn-topbar">
+            <div class="lrn-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="lrn-topbar-title">دستیار مطالعه AI</div>
+              <div class="lrn-topbar-sub">خلاصه‌سازی درس و تولید سوال تمرینی</div>
+            </div>
+          </div>
+          <div class="lrn-scroll">
+            <textarea class="lrn-textarea" id="lesson-input" placeholder="متن درس یا موضوعی که می‌خواهید مطالعه کنید را اینجا بنویسید یا کپی کنید..."></textarea>
+            <div class="lrn-ai-actions">
+              <button class="lrn-ai-btn" id="summarize-btn">📄 خلاصه کن</button>
+              <button class="lrn-ai-btn" id="quizgen-btn">❓ سوال بساز</button>
+            </div>
+            <div id="ai-output"></div>
+          </div>
+        </section>
+
+        <!-- PROGRESS -->
+        <section class="lrn-screen" id="screen-progress">
+          <div class="lrn-topbar">
+            <div class="lrn-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="lrn-topbar-title">پیشرفت من</div>
+              <div class="lrn-topbar-sub">خلاصه فعالیت یادگیری شما</div>
+            </div>
+          </div>
+          <div class="lrn-scroll">
+            <div class="lrn-stat-grid">
+              <div class="lrn-stat-card"><div class="lrn-stat-num">۳</div><div class="lrn-stat-label">دوره در حال گذراندن</div></div>
+              <div class="lrn-stat-card"><div class="lrn-stat-num">۷۸٪</div><div class="lrn-stat-label">میانگین نمره آزمون</div></div>
+              <div class="lrn-stat-card"><div class="lrn-stat-num">۵</div><div class="lrn-stat-label">روز متوالی مطالعه</div></div>
+            </div>
+            <div class="lrn-panel">
+              <div class="lrn-panel-title">فعالیت هفتگی (دقیقه مطالعه)</div>
+              <div id="progress-chart"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <a href="https://ble.ir/kyanai" target="_blank" rel="noopener" class="lrn-cta-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c5.52 0 10 4.03 10 9s-4.48 9-10 9c-1.02 0-2-.13-2.93-.38-.98.63-2.5 1.4-4.2 1.75a.3.3 0 0 1-.34-.4c.63-1.05.93-2.28 1.05-3.14C3.65 16.24 2 13.8 2 11c0-4.97 4.48-9 10-9z"/><path d="M7.6 12.3l2.7 2.7 5.6-5.6"/></svg>
+        همکاری با Kyanai در بله
+      </a>
+
+      <div class="lrn-bottomnav">
+        <button class="lrn-navbtn active" data-tab="courses">
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+          <span class="label">دوره‌ها</span>
+        </button>
+        <button class="lrn-navbtn" data-tab="quiz">
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2-2.4 3.3"/><path d="M12 17h.01"/></svg></span>
+          <span class="label">آزمون</span>
+        </button>
+        <button class="lrn-navbtn" data-tab="ai">
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span>
+          <span class="label">دستیار AI</span>
+        </button>
+        <button class="lrn-navbtn" data-tab="progress">
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h4v8H3zM10 8h4v13h-4zM17 3h4v18h-4z"/></svg></span>
+          <span class="label">پیشرفت</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- Tabs ---------------- */
+const screenIds = { courses: 'screen-courses', quiz: 'screen-quiz', ai: 'screen-ai', progress: 'screen-progress' };
+document.querySelectorAll('.lrn-navbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lrn-navbtn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.lrn-screen').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(screenIds[btn.dataset.tab]).classList.add('active');
+  });
+});
+
+/* ---------------- Courses ---------------- */
+const COURSES = [
+  { title: 'مبانی پایتون', sub: '۱۲ درس · سطح مقدماتی', progress: 65,
+    lessons: [{n:'متغیرها و انواع داده', done:true},{n:'حلقه‌ها و شرط‌ها',done:true},{n:'توابع',done:false},{n:'کار با فایل',done:false}] },
+  { title: 'مقدمات هوش مصنوعی', sub: '۸ درس · سطح متوسط', progress: 30,
+    lessons: [{n:'یادگیری ماشین چیست؟',done:true},{n:'داده و ویژگی‌ها',done:false},{n:'مدل‌های ساده',done:false}] },
+  { title: 'اتوماسیون فروش با AI', sub: '۶ درس · سطح متوسط', progress: 100,
+    lessons: [{n:'معرفی چت‌بات فروش',done:true},{n:'طراحی سناریوی گفتگو',done:true},{n:'اتصال به پیام‌رسان',done:true}] },
+];
+const coursesEl = document.getElementById('courses-list');
+COURSES.forEach(c => {
+  const card = document.createElement('div');
+  card.className = 'lrn-course-card';
+  const lessonsHtml = c.lessons.map(l =>
+    '<div class="lrn-lesson-row' + (l.done ? ' done' : '') + '">' + (l.done ? '✓' : '○') + ' &nbsp;' + l.n + '</div>'
+  ).join('');
+  card.innerHTML =
+    '<div class="lrn-course-head">' +
+      '<div><div class="lrn-course-title">' + c.title + '</div><div class="lrn-course-sub">' + c.sub + '</div></div>' +
+      '<div class="lrn-progress-pct">' + c.progress + '٪</div>' +
+    '</div>' +
+    '<div class="lrn-progress-track"><div class="lrn-progress-fill" style="width:' + c.progress + '%"></div></div>' +
+    '<div class="lrn-lesson-list">' + lessonsHtml + '</div>';
+  card.onclick = () => card.classList.toggle('open');
+  coursesEl.appendChild(card);
+});
+
+/* ---------------- Quiz ---------------- */
+const QUIZ = [
+  { q: 'کدام مورد یک زبان برنامه‌نویسی است؟', options: ['HTML', 'Python', 'CSS', 'JSON'], correct: 1 },
+  { q: 'یادگیری ماشین (Machine Learning) زیرمجموعه‌ی کدام حوزه است؟', options: ['طراحی گرافیک', 'هوش مصنوعی', 'شبکه کامپیوتری', 'امنیت سایبری'], correct: 1 },
+  { q: 'در یک چت‌بات فروش، «لید» به چه معناست؟', options: ['خطای برنامه', 'مشتری بالقوه', 'نوعی پایگاه داده', 'زبان برنامه‌نویسی'], correct: 1 },
+  { q: 'کدام مورد برای ذخیره‌سازی داده‌های ساختاریافته مناسب‌تر است؟', options: ['فایل تصویری', 'پایگاه داده', 'فایل صوتی', 'فونت'], correct: 1 },
+];
+let quizIndex = 0;
+let quizScore = 0;
+let answered = false;
+
+function renderQuizProgress() {
+  const progEl = document.getElementById('quiz-progress');
+  progEl.innerHTML = '';
+  QUIZ.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'lrn-quiz-dot' + (i < quizIndex ? ' filled' : '');
+    progEl.appendChild(dot);
+  });
+}
+
+function renderQuiz() {
+  renderQuizProgress();
+  const bodyEl = document.getElementById('quiz-body');
+  bodyEl.innerHTML = '';
+
+  if (quizIndex >= QUIZ.length) {
+    const pct = Math.round((quizScore / QUIZ.length) * 100);
+    bodyEl.innerHTML =
+      '<div class="lrn-quiz-result">' +
+        '<div class="lrn-quiz-result-num">' + pct + '٪</div>' +
+        '<div class="lrn-quiz-result-label">' + quizScore + ' از ' + QUIZ.length + ' سوال درست</div>' +
+      '</div>' +
+      '<button class="lrn-quiz-next" id="quiz-retry-btn">شروع دوباره</button>';
+    document.getElementById('quiz-retry-btn').onclick = () => {
+      quizIndex = 0; quizScore = 0; answered = false; renderQuiz();
+    };
+    return;
+  }
+
+  const item = QUIZ[quizIndex];
+  answered = false;
+  const qEl = document.createElement('div');
+  qEl.className = 'lrn-quiz-question';
+  qEl.textContent = item.q;
+  bodyEl.appendChild(qEl);
+
+  item.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'lrn-quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => {
+      if (answered) return;
+      answered = true;
+      const allOptions = bodyEl.querySelectorAll('.lrn-quiz-option');
+      allOptions.forEach((b, bi) => {
+        if (bi === item.correct) b.classList.add('correct');
+        else if (bi === i) b.classList.add('wrong');
+      });
+      if (i === item.correct) quizScore++;
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'lrn-quiz-next';
+      nextBtn.textContent = quizIndex === QUIZ.length - 1 ? 'مشاهده نتیجه' : 'سوال بعدی';
+      nextBtn.onclick = () => { quizIndex++; renderQuiz(); };
+      bodyEl.appendChild(nextBtn);
+    };
+    bodyEl.appendChild(btn);
+  });
+}
+renderQuiz();
+
+/* ---------------- AI assistant (templated demo) ---------------- */
+function summarizeText(text) {
+  if (!text) return 'ابتدا متن یا موضوع درس را در کادر بالا بنویسید.';
+  const words = text.trim().split(/\s+/).slice(0, 6).join(' ');
+  return '📄 خلاصه:\n\nاین بخش درباره‌ی «' + words + '...» است. نکات کلیدی: مفهوم اصلی، یک مثال کاربردی، و نتیجه‌گیری عملی برای کاربرد در پروژه‌های واقعی.\n\n(این یک خلاصه‌ی نمونه برای دموی محصول است.)';
+}
+function generateQuestion(text) {
+  if (!text) return 'ابتدا متن یا موضوع درس را در کادر بالا بنویسید.';
+  const topic = text.trim().split(/\s+/).slice(0, 4).join(' ');
+  return '❓ سوال تمرینی تولیدشده:\n\n«کدام گزینه به بهترین شکل مفهوم ' + topic + ' را توضیح می‌دهد؟»\n\nالف) تعریف نادرست ۱\nب) تعریف صحیح ✓\nج) تعریف نادرست ۲\nد) تعریف نادرست ۳';
+}
+function runAiAction(fn) {
+  const text = document.getElementById('lesson-input').value;
+  const outputEl = document.getElementById('ai-output');
+  outputEl.innerHTML = '<div class="lrn-loading"><span class="lrn-spinner"></span><span>در حال پردازش...</span></div>';
+  setTimeout(() => {
+    outputEl.innerHTML = '<div class="lrn-result-box"></div>';
+    outputEl.querySelector('.lrn-result-box').textContent = fn(text);
+  }, 800);
+}
+document.getElementById('summarize-btn').onclick = () => runAiAction(summarizeText);
+document.getElementById('quizgen-btn').onclick = () => runAiAction(generateQuestion);
+
+/* ---------------- Progress ---------------- */
+const WEEK = [
+  { d: 'شنبه', val: 45 }, { d: 'یکشنبه', val: 70 }, { d: 'دوشنبه', val: 30 },
+  { d: 'سه‌شنبه', val: 85 }, { d: 'چهارشنبه', val: 55 }, { d: 'پنجشنبه', val: 40 }, { d: 'جمعه', val: 20 },
+];
+const progressChartEl = document.getElementById('progress-chart');
+WEEK.forEach(w => {
+  const row = document.createElement('div');
+  row.className = 'lrn-week-row';
+  row.innerHTML =
+    '<span class="lrn-week-label">' + w.d + '</span>' +
+    '<span class="lrn-week-track"><span class="lrn-week-fill" style="width:' + w.val + '%"></span></span>';
+  progressChartEl.appendChild(row);
+});
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

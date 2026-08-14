@@ -144,6 +144,14 @@
   .kyanai-disclaimer { margin-top: 16px; display: flex; align-items: flex-start; gap: 8px; color: #7F869C; font-size: 11.5px; line-height: 1.8; }
 
   /* bottom nav */
+  .kyanai-cta-bar {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px 16px; background: linear-gradient(135deg, #2FD5C4, #23A99B);
+    color: #08110F; font-weight: 700; font-size: 13px; text-decoration: none;
+    margin: 0 16px 12px; border-radius: 100px;
+  }
+  .kyanai-cta-bar:active { opacity: .85; }
+
   .kyanai-bottomnav {
     display: flex; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(8,9,15,0.6);
     padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px);
@@ -268,6 +276,11 @@
         </section>
 
       </div>
+
+      <a href="https://ble.ir/kyanai" target="_blank" rel="noopener" class="kyanai-cta-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c5.52 0 10 4.03 10 9s-4.48 9-10 9c-1.02 0-2-.13-2.93-.38-.98.63-2.5 1.4-4.2 1.75a.3.3 0 0 1-.34-.4c.63-1.05.93-2.28 1.05-3.14C3.65 16.24 2 13.8 2 11c0-4.97 4.48-9 10-9z"/><path d="M7.6 12.3l2.7 2.7 5.6-5.6"/></svg>
+        صحبت مستقیم با حمزه در بله
+      </a>
 
       <div class="kyanai-bottomnav">
         <button class="kyanai-navbtn active" data-tab="chat">

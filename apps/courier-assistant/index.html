@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>دستیار درآمد پیک</title>
+<meta name="description" content="ثبت سفارش، محاسبه درآمد و سود واقعی، گزارش هفتگی و پیشنهاد بهترین مناطق کاری برای پیک‌ها و رانندگان" />
+<meta name="theme-color" content="#0D0E17" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #08090f; font-family: 'Vazirmatn','Segoe UI',Tahoma,sans-serif; height: 100%; }
+  #root { min-height: 100vh; }
+
+  .cour-shell {
+    min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 20% 20%, rgba(47,213,196,0.08), transparent 45%), radial-gradient(circle at 80% 85%, rgba(216,174,94,0.06), transparent 45%), #08090f;
+    padding: 24px 12px;
+  }
+  .cour-phone {
+    width: 390px; height: min(844px, 96vh); max-width: 100%;
+    background: linear-gradient(180deg, #0D0E17 0%, #151827 100%);
+    border-radius: 40px; border: 10px solid #05060a;
+    box-shadow: 0 0 0 1px rgba(47,213,196,0.15), 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(47,213,196,0.08);
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+  }
+  .cour-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 22px; background: #05060a; border-radius: 0 0 16px 16px; z-index: 20; }
+  .cour-status { display: flex; justify-content: space-between; align-items: center; padding: 14px 22px 4px; font-size: 13px; color: #9DA3B8; direction: ltr; }
+  .cour-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .cour-topbar { padding: 10px 20px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .cour-topbar-icon { width: 38px; height: 38px; border-radius: 12px; overflow: hidden; padding: 0; background: linear-gradient(135deg, rgba(47,213,196,0.18), rgba(216,174,94,0.12)); border: 1px solid rgba(47,213,196,0.3); display: flex; align-items: center; justify-content: center; color: #2FD5C4; flex-shrink: 0; }
+  .cour-topbar-title { color: #F0F2F8; font-weight: 700; font-size: 15px; }
+  .cour-topbar-sub { color: #7F869C; font-size: 12px; margin-top: 1px; }
+
+  .cour-screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
+  .cour-screen.active { display: flex; }
+  .cour-scroll { flex: 1; overflow-y: auto; padding: 16px; }
+
+  .cour-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .cour-stat-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; }
+  .cour-stat-num { font-size: 19px; font-weight: 800; color: #F0F2F8; font-family: monospace; }
+  .cour-stat-label { font-size: 11px; color: #7F869C; margin-top: 4px; }
+
+  .cour-profit-card {
+    border-radius: 16px; padding: 18px; margin-bottom: 16px;
+    background: linear-gradient(135deg, rgba(47,213,196,0.12), rgba(216,174,94,0.06)); border: 1px solid rgba(47,213,196,0.28);
+  }
+  .cour-profit-title { font-size: 12.5px; color: #2FD5C4; margin-bottom: 6px; }
+  .cour-profit-num { font-size: 30px; font-weight: 800; color: #F0F2F8; font-family: monospace; }
+  .cour-profit-sub { font-size: 11.5px; color: #9DA3B8; margin-top: 4px; }
+  .cour-profit-breakdown { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .cour-profit-breakdown div { text-align: center; flex: 1; }
+  .cour-profit-breakdown .num { font-size: 14px; font-weight: 700; font-family: monospace; }
+  .cour-profit-breakdown .lbl { font-size: 10px; color: #7F869C; margin-top: 3px; }
+
+  .cour-panel { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+  .cour-panel-title { font-size: 13px; font-weight: 700; color: #F0F2F8; margin-bottom: 12px; }
+  .cour-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .cour-bar-label { font-size: 11.5px; color: #C7CBDA; width: 60px; flex-shrink: 0; }
+  .cour-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 100px; overflow: hidden; }
+  .cour-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #2FD5C4, #D8AE5E); }
+  .cour-bar-val { font-size: 10.5px; color: #9DA3B8; width: 56px; text-align: left; font-family: monospace; flex-shrink: 0; }
+
+  .cour-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 13px 14px; margin-bottom: 10px; }
+  .cour-card-head { display: flex; justify-content: space-between; align-items: center; }
+  .cour-card-title { color: #F0F2F8; font-weight: 600; font-size: 13.5px; }
+  .cour-card-sub { color: #7F869C; font-size: 11.5px; margin-top: 3px; }
+  .cour-card-amount { font-size: 14px; font-weight: 800; color: #2FD5C4; font-family: monospace; }
+
+  .cour-zone-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+  .cour-zone-rank { width: 30px; height: 30px; border-radius: 10px; background: rgba(47,213,196,0.12); border: 1px solid rgba(47,213,196,0.3); color: #2FD5C4; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cour-zone-name { color: #F0F2F8; font-weight: 600; font-size: 13.5px; }
+  .cour-zone-meta { color: #7F869C; font-size: 11px; margin-top: 3px; }
+
+  .cour-fab { position: absolute; bottom: 90px; left: 20px; width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, #2FD5C4, #23A99B); border: none; display: flex; align-items: center; justify-content: center; color: #08110F; box-shadow: 0 8px 24px rgba(47,213,196,0.35); cursor: pointer; z-index: 30; }
+
+  .cour-modal-backdrop { position: absolute; inset: 0; background: rgba(5,6,10,0.7); display: none; align-items: flex-end; z-index: 40; }
+  .cour-modal-backdrop.open { display: flex; }
+  .cour-modal { width: 100%; background: #12141f; border-radius: 20px 20px 0 0; padding: 20px; border-top: 1px solid rgba(47,213,196,0.25); }
+  .cour-modal-title { color: #F0F2F8; font-weight: 700; font-size: 14px; margin-bottom: 14px; }
+  .cour-field { margin-bottom: 10px; }
+  .cour-field label { display: block; font-size: 11.5px; color: #9DA3B8; margin-bottom: 6px; }
+  .cour-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 12px; color: #E7E9F2; font-family: inherit; font-size: 12.5px; outline: none; }
+  .cour-modal-actions { display: flex; gap: 8px; margin-top: 14px; }
+  .cour-modal-actions button { flex: 1; padding: 10px; border-radius: 10px; border: none; font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .cour-btn-cancel { background: rgba(255,255,255,0.07); color: #C7CBDA; }
+  .cour-btn-save { background: linear-gradient(135deg, #2FD5C4, #23A99B); color: #08110F; }
+
+  .cour-disclaimer { display: flex; align-items: flex-start; gap: 8px; color: #7F869C; font-size: 11px; line-height: 1.8; margin-top: 4px; }
+
+  .cour-cta-bar { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; background: linear-gradient(135deg, #2FD5C4, #23A99B); color: #08110F; font-weight: 700; font-size: 13px; text-decoration: none; margin: 0 16px 12px; border-radius: 100px; }
+
+  .cour-bottomnav { display: flex; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(8,9,15,0.6); padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px); }
+  .cour-navbtn { flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; cursor: pointer; color: #6B7186; font-family: inherit; }
+  .cour-navbtn.active { color: #2FD5C4; }
+  .cour-navbtn .icon { display: flex; }
+  .cour-navbtn .label { font-size: 10px; font-weight: 500; }
+  .cour-navbtn.active .label { font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="cour-shell">
+    <div class="cour-phone">
+      <div class="cour-notch"></div>
+      <div class="cour-status">
+        <span>9:41</span>
+        <span style="display:flex;gap:4px;"><span style="opacity:.8">4G</span><span>●●●</span></span>
+      </div>
+      <div class="cour-body">
+
+        <!-- TODAY -->
+        <section class="cour-screen active" id="screen-today">
+          <div class="cour-topbar">
+            <div class="cour-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="cour-topbar-title">امروز</div>
+              <div class="cour-topbar-sub">خلاصه درآمد و سود امروز</div>
+            </div>
+          </div>
+          <div class="cour-scroll">
+            <div class="cour-profit-card">
+              <div class="cour-profit-title">سود خالص امروز</div>
+              <div class="cour-profit-num" id="net-profit">۰ تومان</div>
+              <div class="cour-profit-sub" id="order-count-sub">۰ سفارش ثبت‌شده</div>
+              <div class="cour-profit-breakdown">
+                <div><div class="num" style="color:#F0F2F8" id="gross-income">۰</div><div class="lbl">درآمد ناخالص</div></div>
+                <div><div class="num" style="color:#E28A8A" id="fuel-cost">۰</div><div class="lbl">هزینه بنزین</div></div>
+                <div><div class="num" style="color:#D8AE5E" id="total-km">۰</div><div class="lbl">کیلومتر طی‌شده</div></div>
+              </div>
+            </div>
+
+            <div class="cour-panel-title" style="margin-bottom:10px;">سفارش‌های امروز</div>
+            <div id="orders-list"></div>
+            <div class="cour-disclaimer">⛽ هزینه بنزین بر اساس مصرف تقریبی ۱۲۰۰ تومان به‌ازای هر کیلومتر محاسبه شده — می‌توانید در کد این عدد را با نرخ واقعی خودتان جایگزین کنید.</div>
+          </div>
+          <button class="cour-fab" id="add-order-fab">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </section>
+
+        <!-- WEEKLY REPORT -->
+        <section class="cour-screen" id="screen-weekly">
+          <div class="cour-topbar">
+            <div class="cour-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="cour-topbar-title">گزارش هفتگی</div>
+              <div class="cour-topbar-sub">روند درآمد و سود ۷ روز اخیر</div>
+            </div>
+          </div>
+          <div class="cour-scroll">
+            <div class="cour-stat-grid">
+              <div class="cour-stat-card"><div class="cour-stat-num">۴٬۸۲۰٬۰۰۰</div><div class="cour-stat-label">درآمد هفته (تومان)</div></div>
+              <div class="cour-stat-card"><div class="cour-stat-num">۳٬۳۹۰٬۰۰۰</div><div class="cour-stat-label">سود خالص هفته</div></div>
+            </div>
+            <div class="cour-panel">
+              <div class="cour-panel-title">درآمد روزانه</div>
+              <div id="weekly-chart"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ZONES -->
+        <section class="cour-screen" id="screen-zones">
+          <div class="cour-topbar">
+            <div class="cour-topbar-icon"><img src="icons/icon-192.png" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>
+            <div>
+              <div class="cour-topbar-title">بهترین مناطق کاری</div>
+              <div class="cour-topbar-sub">بر اساس میانگین کرایه ثبت‌شده</div>
+            </div>
+          </div>
+          <div class="cour-scroll">
+            <div id="zones-list"></div>
+            <div class="cour-disclaimer">📍 این پیشنهادها برای نمایش قابلیت است؛ در نسخه واقعی از موقعیت GPS و سابقه سفارش‌های واقعی محاسبه می‌شود.</div>
+          </div>
+        </section>
+
+      </div>
+
+      <a href="https://ble.ir/kyanai" target="_blank" rel="noopener" class="cour-cta-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c5.52 0 10 4.03 10 9s-4.48 9-10 9c-1.02 0-2-.13-2.93-.38-.98.63-2.5 1.4-4.2 1.75a.3.3 0 0 1-.34-.4c.63-1.05.93-2.28 1.05-3.14C3.65 16.24 2 13.8 2 11c0-4.97 4.48-9 10-9z"/><path d="M7.6 12.3l2.7 2.7 5.6-5.6"/></svg>
+        همکاری با Kyanai در بله
+      </a>
+
+      <div class="cour-bottomnav">
+        <button class="cour-navbtn active" data-tab="today">
+          <span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+          <span class="label">امروز</span>
+        </button>
+        <button class="cour-navbtn" data-tab="weekly">
+          <span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h4v8H3zM10 8h4v13h-4zM17 3h4v18h-4z"/></svg></span>
+          <span class="label">گزارش هفته</span>
+        </button>
+        <button class="cour-navbtn" data-tab="zones">
+          <span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span class="label">مناطق پردرآمد</span>
+        </button>
+      </div>
+
+      <!-- MODAL: add order -->
+      <div class="cour-modal-backdrop" id="order-modal-backdrop">
+        <div class="cour-modal">
+          <div class="cour-modal-title">ثبت سفارش جدید</div>
+          <div class="cour-field"><label>مقصد / توضیح سفارش</label><input id="new-order-dest" placeholder="مثلاً: میدان ولیعصر" /></div>
+          <div class="cour-field"><label>مبلغ دریافتی (تومان)</label><input id="new-order-amount" placeholder="85000" /></div>
+          <div class="cour-field"><label>مسافت طی‌شده (کیلومتر)</label><input id="new-order-km" placeholder="6" /></div>
+          <div class="cour-modal-actions">
+            <button class="cour-btn-cancel" id="order-cancel-btn">انصراف</button>
+            <button class="cour-btn-save" id="order-save-btn">ثبت سفارش</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- Tabs ---------------- */
+const screenIds = { today: 'screen-today', weekly: 'screen-weekly', zones: 'screen-zones' };
+document.querySelectorAll('.cour-navbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cour-navbtn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.cour-screen').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(screenIds[btn.dataset.tab]).classList.add('active');
+  });
+});
+
+/* ---------------- Today: orders + profit calc ---------------- */
+const FUEL_COST_PER_KM = 1200; // تومان — TODO: با نرخ واقعی خودتان جایگزین کنید
+let orders = [
+  { id: 1, dest: 'میدان ولیعصر', amount: 85000, km: 6 },
+  { id: 2, dest: 'پونک', amount: 120000, km: 11 },
+  { id: 3, dest: 'سعادت‌آباد', amount: 95000, km: 8 },
+];
+
+function fmt(n) { return Math.round(n).toLocaleString('fa-IR'); }
+
+function renderToday() {
+  const grossIncome = orders.reduce((s, o) => s + o.amount, 0);
+  const totalKm = orders.reduce((s, o) => s + o.km, 0);
+  const fuelCost = totalKm * FUEL_COST_PER_KM;
+  const netProfit = grossIncome - fuelCost;
+
+  document.getElementById('net-profit').textContent = fmt(netProfit) + ' تومان';
+  document.getElementById('order-count-sub').textContent = orders.length + ' سفارش ثبت‌شده';
+  document.getElementById('gross-income').textContent = fmt(grossIncome);
+  document.getElementById('fuel-cost').textContent = fmt(fuelCost);
+  document.getElementById('total-km').textContent = fmt(totalKm) + ' کیلومتر';
+
+  const listEl = document.getElementById('orders-list');
+  listEl.innerHTML = '';
+  orders.slice().reverse().forEach(o => {
+    const card = document.createElement('div');
+    card.className = 'cour-card';
+    card.innerHTML =
+      '<div class="cour-card-head">' +
+        '<div><div class="cour-card-title">' + o.dest + '</div><div class="cour-card-sub">' + o.km + ' کیلومتر</div></div>' +
+        '<div class="cour-card-amount">' + fmt(o.amount) + '</div>' +
+      '</div>';
+    listEl.appendChild(card);
+  });
+}
+renderToday();
+
+const orderModal = document.getElementById('order-modal-backdrop');
+document.getElementById('add-order-fab').onclick = () => orderModal.classList.add('open');
+document.getElementById('order-cancel-btn').onclick = () => orderModal.classList.remove('open');
+document.getElementById('order-save-btn').onclick = () => {
+  const dest = document.getElementById('new-order-dest').value.trim();
+  const amount = parseInt(document.getElementById('new-order-amount').value, 10) || 0;
+  const km = parseFloat(document.getElementById('new-order-km').value) || 0;
+  if (!dest || !amount || !km) return;
+  orders.push({ id: Date.now(), dest, amount, km });
+  document.getElementById('new-order-dest').value = '';
+  document.getElementById('new-order-amount').value = '';
+  document.getElementById('new-order-km').value = '';
+  orderModal.classList.remove('open');
+  renderToday();
+};
+
+/* ---------------- Weekly report (demo data) ---------------- */
+const WEEKLY = [
+  { d: 'شنبه', val: 65 }, { d: 'یکشنبه', val: 82 }, { d: 'دوشنبه', val: 48 },
+  { d: 'سه‌شنبه', val: 90 }, { d: 'چهارشنبه', val: 70 }, { d: 'پنجشنبه', val: 58 }, { d: 'جمعه', val: 35 },
+];
+const weeklyEl = document.getElementById('weekly-chart');
+WEEKLY.forEach(w => {
+  const row = document.createElement('div');
+  row.className = 'cour-bar-row';
+  row.innerHTML =
+    '<span class="cour-bar-label">' + w.d + '</span>' +
+    '<span class="cour-bar-track"><span class="cour-bar-fill" style="width:' + w.val + '%"></span></span>' +
+    '<span class="cour-bar-val">' + w.val + '٪</span>';
+  weeklyEl.appendChild(row);
+});
+
+/* ---------------- Zones (demo data) ---------------- */
+const ZONES = [
+  { name: 'میدان ولیعصر', avg: '۱۱۰٬۰۰۰', note: 'ساعت ۱۲ تا ۱۵، تراکم سفارش بالا' },
+  { name: 'سعادت‌آباد', avg: '۹۸٬۰۰۰', note: 'عصرها تقاضای غذا زیاد است' },
+  { name: 'پونک', avg: '۹۰٬۰۰۰', note: 'نزدیک به مناطق مسکونی پرتراکم' },
+  { name: 'ستارخان', avg: '۸۲٬۰۰۰', note: 'ترافیک کمتر، مسیرهای کوتاه‌تر' },
+];
+const zonesEl = document.getElementById('zones-list');
+ZONES.forEach((z, i) => {
+  const card = document.createElement('div');
+  card.className = 'cour-zone-card';
+  card.innerHTML =
+    '<div class="cour-zone-rank">' + (i + 1) + '</div>' +
+    '<div><div class="cour-zone-name">' + z.name + '</div><div class="cour-zone-meta">میانگین کرایه: ' + z.avg + ' تومان · ' + z.note + '</div></div>';
+  zonesEl.appendChild(card);
+});
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

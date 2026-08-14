@@ -10,362 +10,441 @@
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
   * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; background:#08090f; font-family:'Vazirmatn', sans-serif; }
+  html, body {
+    margin: 0; padding: 0; background: #08090f;
+    font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    height: 100%;
+  }
   #root { min-height: 100vh; }
+
+  .kyanai-shell {
+    min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(47,213,196,0.08), transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(216,174,94,0.06), transparent 45%),
+      #08090f;
+    padding: 24px 12px;
+  }
+  .kyanai-phone {
+    width: 390px; height: min(844px, 96vh); max-width: 100%;
+    background: linear-gradient(180deg, #0D0E17 0%, #151827 100%);
+    border-radius: 40px; border: 10px solid #05060a;
+    box-shadow: 0 0 0 1px rgba(47,213,196,0.15), 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(47,213,196,0.08);
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+  }
+  .kyanai-notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 22px; background: #05060a; border-radius: 0 0 16px 16px; z-index: 20;
+  }
+  .kyanai-status {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 22px 4px; font-size: 13px; color: #9DA3B8; direction: ltr;
+  }
+  .kyanai-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  .kyanai-topbar {
+    padding: 10px 20px 16px; display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .kyanai-topbar-icon {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(47,213,196,0.18), rgba(216,174,94,0.12));
+    border: 1px solid rgba(47,213,196,0.3);
+    display: flex; align-items: center; justify-content: center; color: #2FD5C4; font-size: 17px; flex-shrink: 0;
+  }
+  .kyanai-topbar-title { color: #F0F2F8; font-weight: 700; font-size: 15px; }
+  .kyanai-topbar-sub { color: #7F869C; font-size: 12px; margin-top: 1px; }
+
+  /* chat */
+  .kyanai-chat-scroll { flex: 1; overflow-y: auto; padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 10px; }
+  .kyanai-bubble {
+    max-width: 78%; padding: 10px 14px; font-size: 13.5px; line-height: 1.7; border-radius: 4px 16px 16px 16px;
+    background: rgba(255,255,255,0.06); color: #E7E9F2; border: 1px solid rgba(255,255,255,0.08); align-self: flex-start;
+  }
+  .kyanai-bubble.user {
+    align-self: flex-end; background: linear-gradient(135deg, #2FD5C4, #23A99B);
+    color: #08110F; border-radius: 16px 4px 16px 16px; border: none;
+  }
+  .kyanai-typing { align-self: flex-start; background: rgba(255,255,255,0.06); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); display: flex; gap: 4px; padding: 10px 14px; width: fit-content; }
+  .kyanai-typing span { width: 6px; height: 6px; border-radius: 50%; background: #2FD5C4; display: inline-block; animation: kyanaiDot 1.1s infinite ease-in-out; }
+  .kyanai-typing span:nth-child(2) { animation-delay: .15s; }
+  .kyanai-typing span:nth-child(3) { animation-delay: .3s; }
+  @keyframes kyanaiDot { 0%,80%,100%{opacity:.25;transform:translateY(0)} 40%{opacity:1;transform:translateY(-3px)} }
+
+  .kyanai-chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; padding: 0 16px; }
+  .kyanai-chip {
+    background: rgba(47,213,196,0.1); border: 1px solid rgba(47,213,196,0.35); color: #2FD5C4;
+    font-family: inherit; font-size: 12.5px; border-radius: 100px; padding: 8px 14px; cursor: pointer;
+  }
+  .kyanai-chip:disabled { cursor: default; opacity: .6; }
+  .kyanai-input-row {
+    display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; padding: 6px 6px 6px 14px; margin: 0 16px 18px;
+  }
+  .kyanai-input-row input { flex: 1; background: transparent; border: none; outline: none; color: #E7E9F2; font-family: inherit; font-size: 13px; }
+  .kyanai-send-btn {
+    width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #2FD5C4, #23A99B);
+    display: flex; align-items: center; justify-content: center; color: #08110F; flex-shrink: 0;
+  }
+  .kyanai-finished-note { align-self: center; margin: 6px 0; font-size: 11.5px; color: #7F869C; }
+
+  /* leads */
+  .kyanai-stats-row { display: flex; gap: 8px; padding: 12px 16px 4px; }
+  .kyanai-stat { flex: 1; text-align: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 8px 4px; }
+  .kyanai-stat-num { font-size: 16px; font-weight: 800; }
+  .kyanai-stat-label { font-size: 10px; color: #7F869C; margin-top: 2px; }
+  .kyanai-leads-scroll { flex: 1; overflow-y: auto; padding: 12px 16px; }
+  .kyanai-lead-card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 13px 14px; margin-bottom: 10px; cursor: pointer; }
+  .kyanai-lead-head { display: flex; justify-content: space-between; align-items: center; }
+  .kyanai-lead-name { color: #F0F2F8; font-weight: 600; font-size: 13.5px; }
+  .kyanai-lead-service { color: #7F869C; font-size: 12px; margin-top: 3px; }
+  .kyanai-lead-status { font-size: 11px; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+  .kyanai-lead-detail { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.07); display: none; }
+  .kyanai-lead-card.open .kyanai-lead-detail { display: block; }
+  .kyanai-lead-phone { display: flex; align-items: center; gap: 8px; color: #9DA3B8; font-size: 12.5px; margin-bottom: 12px; direction: ltr; justify-content: flex-end; }
+  .kyanai-advance-btn {
+    width: 100%; padding: 9px; border-radius: 10px; border: none; font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+    background: linear-gradient(135deg, #2FD5C4, #23A99B); color: #08110F;
+  }
+  .kyanai-advance-btn:disabled { background: rgba(255,255,255,0.06); color: #7F869C; cursor: default; }
+
+  /* calculator */
+  .kyanai-calc-scroll { flex: 1; overflow-y: auto; padding: 20px 20px; }
+  .kyanai-gauge-wrap { position: relative; width: 168px; height: 168px; margin: 0 auto; }
+  .kyanai-gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .kyanai-gauge-pct { font-size: 30px; font-weight: 800; color: #F0F2F8; font-family: monospace; }
+  .kyanai-gauge-label { font-size: 10.5px; color: #7F869C; margin-top: 2px; }
+  .kyanai-slider-block { margin-bottom: 22px; }
+  .kyanai-slider-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+  .kyanai-slider-label { font-size: 13px; color: #C7CBDA; }
+  .kyanai-slider-value { font-size: 13px; font-weight: 700; color: #2FD5C4; font-family: monospace; }
+  input[type=range] {
+    width: 100%; height: 4px; border-radius: 4px; appearance: none; outline: none; background: rgba(255,255,255,0.1);
+  }
   input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 16px; height: 16px; border-radius: 50%;
-    background: #2FD5C4; cursor: pointer;
+    -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: #2FD5C4; cursor: pointer; box-shadow: 0 0 0 4px rgba(47,213,196,0.18);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%; background: #2FD5C4; cursor: pointer; border: none;
     box-shadow: 0 0 0 4px rgba(47,213,196,0.18);
   }
+  .kyanai-result-card {
+    border-radius: 16px; padding: 16px 18px; margin-top: 26px;
+    background: linear-gradient(135deg, rgba(47,213,196,0.1), rgba(216,174,94,0.06)); border: 1px solid rgba(47,213,196,0.28);
+  }
+  .kyanai-result-title { display: flex; align-items: center; gap: 8px; color: #2FD5C4; font-size: 12.5px; margin-bottom: 4px; }
+  .kyanai-result-row { display: flex; justify-content: space-between; margin-top: 14px; }
+  .kyanai-result-num { font-size: 24px; font-weight: 800; color: #F0F2F8; }
+  .kyanai-result-num.gold { color: #D8AE5E; }
+  .kyanai-result-sub { font-size: 11.5px; color: #9DA3B8; margin-top: 2px; }
+  .kyanai-disclaimer { margin-top: 16px; display: flex; align-items: flex-start; gap: 8px; color: #7F869C; font-size: 11.5px; line-height: 1.8; }
+
+  /* bottom nav */
+  .kyanai-bottomnav {
+    display: flex; border-top: 1px solid rgba(255,255,255,0.07); background: rgba(8,9,15,0.6);
+    padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px);
+  }
+  .kyanai-navbtn {
+    flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 6px 0; cursor: pointer; color: #6B7186; font-family: inherit;
+  }
+  .kyanai-navbtn.active { color: #2FD5C4; }
+  .kyanai-navbtn .icon { font-size: 18px; }
+  .kyanai-navbtn .label { font-size: 10.5px; font-weight: 500; }
+  .kyanai-navbtn.active .label { font-weight: 700; }
+
+  .kyanai-screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
+  .kyanai-screen.active { display: flex; }
 </style>
 </head>
 <body>
-<div id="root"></div>
+<div id="root">
+  <div class="kyanai-shell">
+    <div class="kyanai-phone">
+      <div class="kyanai-notch"></div>
+      <div class="kyanai-status">
+        <span>9:41</span>
+        <span style="display:flex;gap:4px;"><span style="opacity:.8">4G</span><span>●●●</span></span>
+      </div>
+      <div class="kyanai-body">
 
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <!-- CHAT SCREEN -->
+        <section class="kyanai-screen active" id="screen-chat">
+          <div class="kyanai-topbar">
+            <div class="kyanai-topbar-icon">✨</div>
+            <div>
+              <div class="kyanai-topbar-title">دستیار هوشمند Kyanai</div>
+              <div class="kyanai-topbar-sub" id="chat-subtitle">آنلاین · معمولاً سریع پاسخ می‌دهد</div>
+            </div>
+          </div>
+          <div class="kyanai-chat-scroll" id="chat-scroll"></div>
+          <div class="kyanai-chip-row" id="chat-chips"></div>
+          <div class="kyanai-input-row">
+            <input placeholder="پیام خود را بنویسید..." disabled />
+            <div class="kyanai-send-btn">➤</div>
+          </div>
+        </section>
 
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useRef } = React;
+        <!-- LEADS SCREEN -->
+        <section class="kyanai-screen" id="screen-leads">
+          <div class="kyanai-topbar">
+            <div class="kyanai-topbar-icon">👥</div>
+            <div>
+              <div class="kyanai-topbar-title">لیدها</div>
+              <div class="kyanai-topbar-sub" id="leads-subtitle">4 مخاطب — به‌روزرسانی زنده</div>
+            </div>
+          </div>
+          <div class="kyanai-stats-row" id="leads-stats"></div>
+          <div class="kyanai-leads-scroll" id="leads-list"></div>
+        </section>
 
-/* ---------------------------------------------------------
-   kyanai.ir brand tokens
-   bg:      #0D0E17 → #151827
-   accent:  #2FD5C4 (turquoise)
-   accent2: #D8AE5E (gold)
---------------------------------------------------------- */
+        <!-- CALCULATOR SCREEN -->
+        <section class="kyanai-screen" id="screen-calc">
+          <div class="kyanai-topbar">
+            <div class="kyanai-topbar-icon">🧮</div>
+            <div>
+              <div class="kyanai-topbar-title">محاسبه‌گر صرفه‌جویی</div>
+              <div class="kyanai-topbar-sub">تخمین اثر اتوماسیون روی کسب‌وکار شما</div>
+            </div>
+          </div>
+          <div class="kyanai-calc-scroll">
+            <div class="kyanai-gauge-wrap">
+              <svg id="gauge-svg" width="168" height="168" style="transform:rotate(-90deg)">
+                <circle cx="84" cy="84" r="77" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="14" />
+                <circle id="gauge-ring" cx="84" cy="84" r="77" fill="none" stroke="url(#kyanaiGaugeGrad)" stroke-width="14" stroke-linecap="round" style="transition: stroke-dashoffset .45s cubic-bezier(.4,0,.2,1)" />
+                <defs>
+                  <linearGradient id="kyanaiGaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#2FD5C4" />
+                    <stop offset="100%" stop-color="#D8AE5E" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="kyanai-gauge-center">
+                <div class="kyanai-gauge-pct" id="gauge-pct">0%</div>
+                <div class="kyanai-gauge-label">اتوماسیون‌پذیر</div>
+              </div>
+            </div>
 
-function AppShell({ children }) {
-  return (
-    <div style={{
-      minHeight: "100vh", width: "100%", display: "flex",
-      alignItems: "center", justifyContent: "center",
-      background: "radial-gradient(circle at 20% 20%, rgba(47,213,196,0.08), transparent 45%), radial-gradient(circle at 80% 85%, rgba(216,174,94,0.06), transparent 45%), #08090f",
-      padding: "24px 12px",
-    }}>
-      <div style={{
-        width: 390, height: "min(844px, 96vh)", maxWidth: "100%",
-        background: "linear-gradient(180deg, #0D0E17 0%, #151827 100%)",
-        borderRadius: 40, border: "10px solid #05060a",
-        boxShadow: "0 0 0 1px rgba(47,213,196,0.15), 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(47,213,196,0.08)",
-        overflow: "hidden", position: "relative", display: "flex", flexDirection: "column",
-      }}>
-        <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 120, height: 22, background: "#05060a", borderRadius: "0 0 16px 16px", zIndex: 20 }} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 22px 4px", fontSize: 13, color: "#9DA3B8", direction: "ltr" }}>
-          <span>9:41</span>
-          <span style={{ display: "flex", gap: 4 }}><span style={{ opacity: .8 }}>4G</span><span>●●●</span></span>
-        </div>
-        <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>{children}</div>
+            <div style="margin-top:26px;">
+              <div class="kyanai-slider-block">
+                <div class="kyanai-slider-row">
+                  <span class="kyanai-slider-label">تعداد پیام مشتری در روز</span>
+                  <span class="kyanai-slider-value" id="msg-value">50</span>
+                </div>
+                <input type="range" id="msg-slider" min="10" max="300" step="5" value="50" />
+              </div>
+              <div class="kyanai-slider-block">
+                <div class="kyanai-slider-row">
+                  <span class="kyanai-slider-label">زمان پاسخ به هر پیام</span>
+                  <span class="kyanai-slider-value" id="min-value">4 دقیقه</span>
+                </div>
+                <input type="range" id="min-slider" min="1" max="15" step="1" value="4" />
+              </div>
+            </div>
+
+            <div class="kyanai-result-card">
+              <div class="kyanai-result-title">📈 نتیجه تخمینی ماهانه</div>
+              <div class="kyanai-result-row">
+                <div>
+                  <div class="kyanai-result-num" id="hours-saved">0</div>
+                  <div class="kyanai-result-sub">ساعت صرفه‌جویی‌شده</div>
+                </div>
+                <div style="text-align:left;">
+                  <div class="kyanai-result-num gold" id="extra-leads">+0</div>
+                  <div class="kyanai-result-sub">لید بیشتر</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kyanai-disclaimer">
+              <span>⏱</span>
+              <span>این عدد یک برآورد ساده است؛ برای محاسبه دقیق‌تر متناسب با کسب‌وکارتان، یک مشاوره رایگان رزرو کنید.</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="kyanai-bottomnav">
+        <button class="kyanai-navbtn active" data-tab="chat"><span class="icon">💬</span><span class="label">چت هوشمند</span></button>
+        <button class="kyanai-navbtn" data-tab="leads"><span class="icon">👥</span><span class="label">لیدها</span></button>
+        <button class="kyanai-navbtn" data-tab="calc"><span class="icon">🧮</span><span class="label">محاسبه‌گر</span></button>
       </div>
     </div>
-  );
-}
+  </div>
+</div>
 
-function TopBar({ title, subtitle, icon }) {
-  return (
-    <div style={{ padding: "10px 20px 16px", display: "flex", alignItems: "center", gap: 12, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-      <div style={{
-        width: 38, height: 38, borderRadius: 12,
-        background: "linear-gradient(135deg, rgba(47,213,196,0.18), rgba(216,174,94,0.12))",
-        border: "1px solid rgba(47,213,196,0.3)", display: "flex", alignItems: "center", justifyContent: "center",
-        color: "#2FD5C4", flexShrink: 0, fontSize: 17,
-      }}>{icon}</div>
-      <div>
-        <div style={{ color: "#F0F2F8", fontWeight: 700, fontSize: 15 }}>{title}</div>
-        <div style={{ color: "#7F869C", fontSize: 12, marginTop: 1 }}>{subtitle}</div>
-      </div>
-    </div>
-  );
-}
+<script>
+/* ---------------- Tabs ---------------- */
+document.querySelectorAll('.kyanai-navbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.kyanai-navbtn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.kyanai-screen').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('screen-' + btn.dataset.tab).classList.add('active');
+  });
+});
 
-/* ---------------- Chat screen ---------------- */
-
+/* ---------------- Chat ---------------- */
 const CHAT_SCRIPT = [
-  { userText: "سلام، قیمت اتوماسیون فروش چقدره؟", botText: "سلام 👋 اتوماسیون فروش از ۱۰ میلیون تومان شروع می‌شه و بسته به تعداد پیام روزانه‌تون متغیره. چند تا سوال کوتاه بپرسم تا دقیق‌تر راهنماییتون کنم؟", chips: ["حتماً بپرس", "فقط رنج قیمتی رو بگو"] },
-  { userText: "حتماً بپرس", botText: "عالیه. روزانه تقریباً چند پیام مشتری (اینستاگرام/بله/سایت) دریافت می‌کنید؟", chips: ["زیر ۲۰ پیام", "۲۰ تا ۱۰۰ پیام", "بیش از ۱۰۰ پیام"] },
-  { userText: "۲۰ تا ۱۰۰ پیام", botText: "متوجه شدم — برای این حجم، پکیج اتوماسیون فروش (از ۱۰ میلیون تومان، تحویل ۱-۲ هفته) دقیقاً مناسبه. می‌خواید نمونه گفتگوی زنده رو ببینید یا مستقیم با حمزه صحبت کنید؟", chips: ["نمونه گفتگو رو ببینم", "با حمزه صحبت کنم"] },
-  { userText: "با حمزه صحبت کنم", botText: "چشم! لیدتون ثبت شد ✅ حمزه به‌زودی از طریق بله باهاتون تماس می‌گیره. ممنون از وقتتون 🙏", chips: [] },
+  { botText: "سلام 👋 اتوماسیون فروش از ۱۰ میلیون تومان شروع می‌شه و بسته به تعداد پیام روزانه‌تون متغیره. چند تا سوال کوتاه بپرسم تا دقیق‌تر راهنماییتون کنم؟", chips: ["حتماً بپرس", "فقط رنج قیمتی رو بگو"] },
+  { botText: "عالیه. روزانه تقریباً چند پیام مشتری (اینستاگرام/بله/سایت) دریافت می‌کنید؟", chips: ["زیر ۲۰ پیام", "۲۰ تا ۱۰۰ پیام", "بیش از ۱۰۰ پیام"] },
+  { botText: "متوجه شدم — برای این حجم، پکیج اتوماسیون فروش (از ۱۰ میلیون تومان، تحویل ۱-۲ هفته) دقیقاً مناسبه. می‌خواید نمونه گفتگوی زنده رو ببینید یا مستقیم با حمزه صحبت کنید؟", chips: ["نمونه گفتگو رو ببینم", "با حمزه صحبت کنم"] },
+  { botText: "چشم! لیدتون ثبت شد ✅ حمزه به‌زودی از طریق بله باهاتون تماس می‌گیره. ممنون از وقتتون 🙏", chips: [] },
 ];
 
-function TypingDots() {
-  return (
-    <div style={{ display: "flex", gap: 4, padding: "10px 14px" }}>
-      {[0,1,2].map(i => <span key={i} style={{ width:6, height:6, borderRadius:"50%", background:"#2FD5C4", display:"inline-block", animation:`kyanaiDot 1.1s ${i*0.15}s infinite ease-in-out` }} />)}
-    </div>
-  );
+let chatStep = 0;
+const chatScroll = document.getElementById('chat-scroll');
+const chatChips = document.getElementById('chat-chips');
+const chatSubtitle = document.getElementById('chat-subtitle');
+
+function addBubble(text, isUser) {
+  const div = document.createElement('div');
+  div.className = 'kyanai-bubble' + (isUser ? ' user' : '');
+  div.textContent = text;
+  chatScroll.appendChild(div);
+  chatScroll.scrollTop = chatScroll.scrollHeight;
 }
 
-function ChatScreen() {
-  const [step, setStep] = useState(0);
-  const [messages, setMessages] = useState([{ from: "bot", text: "سلام 👋 من دستیار هوشمند Kyanai هستم. چطور می‌تونم کمکتون کنم؟" }]);
-  const [typing, setTyping] = useState(false);
-  const scrollRef = useRef(null);
-
-  useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight; }, [messages, typing]);
-
-  const handleChip = (label) => {
-    const scripted = CHAT_SCRIPT[step];
-    if (!scripted) return;
-    setMessages(m => [...m, { from: "user", text: label }]);
-    setTyping(true);
-    setTimeout(() => {
-      setTyping(false);
-      setMessages(m => [...m, { from: "bot", text: scripted.botText }]);
-      setStep(s => s + 1);
-    }, 850);
-  };
-
-  const currentChips = CHAT_SCRIPT[step]?.chips || [];
-  const finished = step >= CHAT_SCRIPT.length;
-
-  return (
-    <React.Fragment>
-      <TopBar title="دستیار هوشمند Kyanai" subtitle={typing ? "در حال تایپ..." : "آنلاین · معمولاً سریع پاسخ می‌دهد"} icon="✨" />
-      <div ref={scrollRef} style={{ flex: 1, overflowY: "auto", padding: "16px 16px 8px", display: "flex", flexDirection: "column", gap: 10 }}>
-        {messages.map((m, i) => (
-          <div key={i} style={{
-            alignSelf: m.from === "bot" ? "flex-start" : "flex-end", maxWidth: "78%",
-            background: m.from === "bot" ? "rgba(255,255,255,0.06)" : "linear-gradient(135deg, #2FD5C4, #23A99B)",
-            color: m.from === "bot" ? "#E7E9F2" : "#08110F",
-            padding: "10px 14px", borderRadius: m.from === "bot" ? "4px 16px 16px 16px" : "16px 4px 16px 16px",
-            fontSize: 13.5, lineHeight: 1.7, border: m.from === "bot" ? "1px solid rgba(255,255,255,0.08)" : "none",
-          }}>{m.text}</div>
-        ))}
-        {typing && <div style={{ alignSelf: "flex-start", background: "rgba(255,255,255,0.06)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.08)" }}><TypingDots /></div>}
-        {finished && !typing && (
-          <div style={{ alignSelf: "center", marginTop: 6, fontSize: 11.5, color: "#7F869C" }}>✓ گفتگو ثبت شد — این یک دموی نمونه‌کار است</div>
-        )}
-      </div>
-      <div style={{ padding: "10px 16px 18px" }}>
-        {!finished && currentChips.length > 0 && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
-            {currentChips.map(c => (
-              <button key={c} onClick={() => handleChip(c)} disabled={typing} style={{
-                background: "rgba(47,213,196,0.1)", border: "1px solid rgba(47,213,196,0.35)", color: "#2FD5C4",
-                fontFamily: "inherit", fontSize: 12.5, borderRadius: 100, padding: "8px 14px",
-                cursor: typing ? "default" : "pointer",
-              }}>{c}</button>
-            ))}
-          </div>
-        )}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 100, padding: "6px 6px 6px 14px" }}>
-          <input placeholder="پیام خود را بنویسید..." disabled style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "#E7E9F2", fontFamily: "inherit", fontSize: 13 }} />
-          <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg, #2FD5C4, #23A99B)", display: "flex", alignItems: "center", justifyContent: "center", color: "#08110F", flexShrink: 0 }}>➤</div>
-        </div>
-      </div>
-    </React.Fragment>
-  );
+function renderChips() {
+  chatChips.innerHTML = '';
+  const scripted = CHAT_SCRIPT[chatStep];
+  if (chatStep >= CHAT_SCRIPT.length) {
+    const note = document.createElement('div');
+    note.className = 'kyanai-finished-note';
+    note.textContent = '✓ گفتگو ثبت شد — این یک دموی نمونه‌کار است';
+    chatScroll.appendChild(note);
+    return;
+  }
+  scripted.chips.forEach(label => {
+    const btn = document.createElement('button');
+    btn.className = 'kyanai-chip';
+    btn.textContent = label;
+    btn.onclick = () => handleChip(label);
+    chatChips.appendChild(btn);
+  });
 }
 
-/* ---------------- Leads / CRM screen ---------------- */
+function handleChip(label) {
+  const scripted = CHAT_SCRIPT[chatStep];
+  if (!scripted) return;
+  addBubble(label, true);
+  chatChips.innerHTML = '';
+  chatSubtitle.textContent = 'در حال تایپ...';
+  const typing = document.createElement('div');
+  typing.className = 'kyanai-typing';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  chatScroll.appendChild(typing);
+  chatScroll.scrollTop = chatScroll.scrollHeight;
 
+  setTimeout(() => {
+    typing.remove();
+    addBubble(scripted.botText, false);
+    chatSubtitle.textContent = 'آنلاین · معمولاً سریع پاسخ می‌دهد';
+    chatStep++;
+    renderChips();
+  }, 850);
+}
+
+addBubble('سلام 👋 من دستیار هوشمند Kyanai هستم. چطور می‌تونم کمکتون کنم؟', false);
+renderChips();
+
+/* ---------------- Leads ---------------- */
 const STATUS_FLOW = ["جدید", "در حال پیگیری", "تبدیل‌شده"];
 const STATUS_COLOR = { "جدید": "#D8AE5E", "در حال پیگیری": "#6FB8FF", "تبدیل‌شده": "#2FD5C4" };
-const INITIAL_LEADS = [
+let leads = [
   { id: 1, name: "امیر رضایی", service: "اتوماسیون فروش", phone: "0912xxxxxxx", status: "جدید" },
   { id: 2, name: "سارا محمدی", service: "طراحی وب‌سایت", phone: "0935xxxxxxx", status: "در حال پیگیری" },
   { id: 3, name: "رضا کریمی", service: "مشاوره هوش مصنوعی", phone: "0918xxxxxxx", status: "تبدیل‌شده" },
   { id: 4, name: "نیلوفر احمدی", service: "دیجیتال مارکتینگ", phone: "0901xxxxxxx", status: "جدید" },
 ];
+let openLeadId = null;
 
-function LeadsScreen() {
-  const [leads, setLeads] = useState(INITIAL_LEADS);
-  const [openId, setOpenId] = useState(null);
+function renderLeads() {
+  document.getElementById('leads-subtitle').textContent = leads.length + ' مخاطب — به‌روزرسانی زنده';
 
-  const advanceStatus = (id) => {
-    setLeads(prev => prev.map(l => {
-      if (l.id !== id) return l;
-      const idx = STATUS_FLOW.indexOf(l.status);
-      return { ...l, status: STATUS_FLOW[Math.min(idx + 1, STATUS_FLOW.length - 1)] };
-    }));
-  };
+  const statsEl = document.getElementById('leads-stats');
+  statsEl.innerHTML = '';
+  STATUS_FLOW.forEach(s => {
+    const count = leads.filter(l => l.status === s).length;
+    const div = document.createElement('div');
+    div.className = 'kyanai-stat';
+    div.style.border = '1px solid ' + STATUS_COLOR[s] + '33';
+    div.innerHTML = '<div class="kyanai-stat-num" style="color:' + STATUS_COLOR[s] + '">' + count + '</div><div class="kyanai-stat-label">' + s + '</div>';
+    statsEl.appendChild(div);
+  });
 
-  const counts = STATUS_FLOW.map(s => leads.filter(l => l.status === s).length);
+  const listEl = document.getElementById('leads-list');
+  listEl.innerHTML = '';
+  leads.forEach(lead => {
+    const card = document.createElement('div');
+    card.className = 'kyanai-lead-card' + (openLeadId === lead.id ? ' open' : '');
+    const color = STATUS_COLOR[lead.status];
+    card.innerHTML =
+      '<div class="kyanai-lead-head">' +
+        '<div><div class="kyanai-lead-name">' + lead.name + '</div><div class="kyanai-lead-service">' + lead.service + '</div></div>' +
+        '<span class="kyanai-lead-status" style="color:' + color + ';background:' + color + '1A;border:1px solid ' + color + '55">' + lead.status + '</span>' +
+      '</div>' +
+      '<div class="kyanai-lead-detail">' +
+        '<div class="kyanai-lead-phone"><span>' + lead.phone + '</span><span>📞</span></div>' +
+        '<button class="kyanai-advance-btn" ' + (lead.status === 'تبدیل‌شده' ? 'disabled' : '') + '>' +
+          (lead.status === 'تبدیل‌شده' ? 'پرونده بسته شد ✓' : 'انتقال به مرحله بعد ←') +
+        '</button>' +
+      '</div>';
 
-  return (
-    <React.Fragment>
-      <TopBar title="لیدها" subtitle={`${leads.length} مخاطب — به‌روزرسانی زنده`} icon="👥" />
-      <div style={{ display: "flex", gap: 8, padding: "12px 16px 4px" }}>
-        {STATUS_FLOW.map((s, i) => (
-          <div key={s} style={{ flex: 1, textAlign: "center", background: "rgba(255,255,255,0.04)", border: `1px solid ${STATUS_COLOR[s]}33`, borderRadius: 10, padding: "8px 4px" }}>
-            <div style={{ fontSize: 16, fontWeight: 800, color: STATUS_COLOR[s] }}>{counts[i]}</div>
-            <div style={{ fontSize: 10, color: "#7F869C", marginTop: 2 }}>{s}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: "12px 16px" }}>
-        {leads.map(lead => {
-          const open = openId === lead.id;
-          return (
-            <div key={lead.id} onClick={() => setOpenId(open ? null : lead.id)} style={{
-              background: "rgba(255,255,255,0.045)", border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 14, padding: "13px 14px", marginBottom: 10, cursor: "pointer",
-            }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div>
-                  <div style={{ color: "#F0F2F8", fontWeight: 600, fontSize: 13.5 }}>{lead.name}</div>
-                  <div style={{ color: "#7F869C", fontSize: 12, marginTop: 3 }}>{lead.service}</div>
-                </div>
-                <span style={{ fontSize: 11, padding: "4px 10px", borderRadius: 100, color: STATUS_COLOR[lead.status], background: `${STATUS_COLOR[lead.status]}1A`, border: `1px solid ${STATUS_COLOR[lead.status]}55`, whiteSpace: "nowrap" }}>{lead.status}</span>
-              </div>
-              {open && (
-                <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#9DA3B8", fontSize: 12.5, marginBottom: 12, direction: "ltr", justifyContent: "flex-end" }}>
-                    <span>{lead.phone}</span><span>📞</span>
-                  </div>
-                  <button onClick={(e) => { e.stopPropagation(); advanceStatus(lead.id); }} disabled={lead.status === "تبدیل‌شده"} style={{
-                    width: "100%", padding: "9px", borderRadius: 10, border: "none", fontFamily: "inherit", fontSize: 12.5, fontWeight: 600,
-                    cursor: lead.status === "تبدیل‌شده" ? "default" : "pointer",
-                    background: lead.status === "تبدیل‌شده" ? "rgba(255,255,255,0.06)" : "linear-gradient(135deg, #2FD5C4, #23A99B)",
-                    color: lead.status === "تبدیل‌شده" ? "#7F869C" : "#08110F",
-                  }}>{lead.status === "تبدیل‌شده" ? "پرونده بسته شد ✓" : "انتقال به مرحله بعد ←"}</button>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </React.Fragment>
-  );
+    card.querySelector('.kyanai-lead-head').onclick = () => {
+      openLeadId = openLeadId === lead.id ? null : lead.id;
+      renderLeads();
+    };
+    const advanceBtn = card.querySelector('.kyanai-advance-btn');
+    advanceBtn.onclick = (e) => {
+      e.stopPropagation();
+      const idx = STATUS_FLOW.indexOf(lead.status);
+      lead.status = STATUS_FLOW[Math.min(idx + 1, STATUS_FLOW.length - 1)];
+      renderLeads();
+    };
+    listEl.appendChild(card);
+  });
 }
+renderLeads();
 
-/* ---------------- ROI Calculator — single synced gauge ---------------- */
+/* ---------------- Calculator ---------------- */
+const msgSlider = document.getElementById('msg-slider');
+const minSlider = document.getElementById('min-slider');
+const gaugeRing = document.getElementById('gauge-ring');
+const R = 77;
+const CIRC = 2 * Math.PI * R;
+gaugeRing.setAttribute('stroke-dasharray', CIRC);
 
-function RadialGauge({ percent, size = 168, stroke = 14 }) {
-  const r = (size - stroke) / 2;
-  const circumference = 2 * Math.PI * r;
-  const offset = circumference * (1 - percent / 100);
+function updateCalc() {
+  const messagesPerDay = Number(msgSlider.value);
+  const minutesPerMsg = Number(minSlider.value);
 
-  return (
-    <div style={{ position: "relative", width: size, height: size, margin: "0 auto" }}>
-      <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth={stroke} />
-        <circle
-          cx={size/2} cy={size/2} r={r} fill="none"
-          stroke="url(#kyanaiGaugeGrad)" strokeWidth={stroke} strokeLinecap="round"
-          strokeDasharray={circumference} strokeDashoffset={offset}
-          style={{ transition: "stroke-dashoffset .45s cubic-bezier(.4,0,.2,1)" }}
-        />
-        <defs>
-          <linearGradient id="kyanaiGaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#2FD5C4" />
-            <stop offset="100%" stopColor="#D8AE5E" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ fontSize: 30, fontWeight: 800, color: "#F0F2F8", fontFamily: "monospace" }}>{percent}%</div>
-        <div style={{ fontSize: 10.5, color: "#7F869C", marginTop: 2 }}>اتوماسیون‌پذیر</div>
-      </div>
-    </div>
-  );
-}
+  document.getElementById('msg-value').textContent = messagesPerDay;
+  document.getElementById('min-value').textContent = minutesPerMsg + ' دقیقه';
+  const msgPct = ((messagesPerDay - 10) / (300 - 10)) * 100;
+  const minPct = ((minutesPerMsg - 1) / (15 - 1)) * 100;
+  msgSlider.style.background = 'linear-gradient(90deg, #2FD5C4 ' + msgPct + '%, rgba(255,255,255,0.1) ' + msgPct + '%)';
+  minSlider.style.background = 'linear-gradient(90deg, #2FD5C4 ' + minPct + '%, rgba(255,255,255,0.1) ' + minPct + '%)';
 
-function Slider({ label, value, min, max, step, onChange, unit }) {
-  const pct = ((value - min) / (max - min)) * 100;
-  return (
-    <div style={{ marginBottom: 22 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-        <span style={{ fontSize: 13, color: "#C7CBDA" }}>{label}</span>
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#2FD5C4", fontFamily: "monospace" }}>{value}{unit}</span>
-      </div>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))}
-        style={{ width: "100%", background: `linear-gradient(90deg, #2FD5C4 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`, height: 4, borderRadius: 4, appearance: "none", outline: "none" }} />
-    </div>
-  );
-}
-
-function CalculatorScreen() {
-  const [messagesPerDay, setMessagesPerDay] = useState(50);
-  const [minutesPerMsg, setMinutesPerMsg] = useState(4);
-
-  // Single source of truth: every displayed number derives from this one score,
-  // so the gauge and the two result numbers can never fall out of sync.
+  // Single source of truth: one score drives the gauge AND both result numbers,
+  // so they can never fall out of sync with each other.
   const impactScore = Math.min(96, Math.round(((messagesPerDay / 300) * 55 + (minutesPerMsg / 15) * 45)));
   const hoursPerMonthSaved = Math.round(((messagesPerDay * minutesPerMsg * 30) / 60) * (impactScore / 100));
   const extraLeadsPerMonth = Math.round(messagesPerDay * 0.15 * 30 * (impactScore / 100) * 0.25);
 
-  return (
-    <React.Fragment>
-      <TopBar title="محاسبه‌گر صرفه‌جویی" subtitle="تخمین اثر اتوماسیون روی کسب‌وکار شما" icon="🧮" />
-      <div style={{ flex: 1, overflowY: "auto", padding: "20px 20px" }}>
-        <RadialGauge percent={impactScore} />
-
-        <div style={{ marginTop: 26 }}>
-          <Slider label="تعداد پیام مشتری در روز" value={messagesPerDay} min={10} max={300} step={5} onChange={setMessagesPerDay} unit="" />
-          <Slider label="زمان پاسخ به هر پیام" value={minutesPerMsg} min={1} max={15} step={1} onChange={setMinutesPerMsg} unit=" دقیقه" />
-        </div>
-
-        <div style={{ borderRadius: 16, padding: "16px 18px", background: "linear-gradient(135deg, rgba(47,213,196,0.1), rgba(216,174,94,0.06))", border: "1px solid rgba(47,213,196,0.28)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#2FD5C4", fontSize: 12.5, marginBottom: 4 }}>📈 نتیجه تخمینی ماهانه</div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 14 }}>
-            <div>
-              <div style={{ fontSize: 24, fontWeight: 800, color: "#F0F2F8" }}>{hoursPerMonthSaved}</div>
-              <div style={{ fontSize: 11.5, color: "#9DA3B8", marginTop: 2 }}>ساعت صرفه‌جویی‌شده</div>
-            </div>
-            <div style={{ textAlign: "left" }}>
-              <div style={{ fontSize: 24, fontWeight: 800, color: "#D8AE5E" }}>+{extraLeadsPerMonth}</div>
-              <div style={{ fontSize: 11.5, color: "#9DA3B8", marginTop: 2 }}>لید بیشتر</div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ marginTop: 16, display: "flex", alignItems: "flex-start", gap: 8, color: "#7F869C", fontSize: 11.5, lineHeight: 1.8 }}>
-          <span>⏱</span>
-          <span>این عدد یک برآورد ساده است؛ برای محاسبه دقیق‌تر متناسب با کسب‌وکارتان، یک مشاوره رایگان رزرو کنید.</span>
-        </div>
-      </div>
-    </React.Fragment>
-  );
+  document.getElementById('gauge-pct').textContent = impactScore + '%';
+  document.getElementById('hours-saved').textContent = hoursPerMonthSaved;
+  document.getElementById('extra-leads').textContent = '+' + extraLeadsPerMonth;
+  gaugeRing.setAttribute('stroke-dashoffset', CIRC * (1 - impactScore / 100));
 }
 
-/* ---------------- Root app ---------------- */
-
-const TABS = [
-  { key: "chat", label: "چت هوشمند", icon: "💬" },
-  { key: "leads", label: "لیدها", icon: "👥" },
-  { key: "calc", label: "محاسبه‌گر", icon: "🧮" },
-];
-
-function KyanaiApp() {
-  const [tab, setTab] = useState("chat");
-  return (
-    <AppShell>
-      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-        {tab === "chat" && <ChatScreen />}
-        {tab === "leads" && <LeadsScreen />}
-        {tab === "calc" && <CalculatorScreen />}
-      </div>
-      <div style={{ display: "flex", borderTop: "1px solid rgba(255,255,255,0.07)", background: "rgba(8,9,15,0.6)", padding: "8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px)" }}>
-        {TABS.map(({ key, label, icon }) => {
-          const active = tab === key;
-          return (
-            <button key={key} onClick={() => setTab(key)} style={{
-              flex: 1, background: "none", border: "none", display: "flex", flexDirection: "column",
-              alignItems: "center", gap: 4, padding: "6px 0", cursor: "pointer",
-              color: active ? "#2FD5C4" : "#6B7186", fontFamily: "inherit",
-            }}>
-              <span style={{ fontSize: 18 }}>{icon}</span>
-              <span style={{ fontSize: 10.5, fontWeight: active ? 700 : 500 }}>{label}</span>
-            </button>
-          );
-        })}
-      </div>
-    </AppShell>
-  );
-}
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<KyanaiApp />);
+msgSlider.addEventListener('input', updateCalc);
+minSlider.addEventListener('input', updateCalc);
+updateCalc();
 </script>
-
-<style>
-@keyframes kyanaiDot { 0%,80%,100%{opacity:.25;transform:translateY(0)} 40%{opacity:1;transform:translateY(-3px)} }
-</style>
 
 <script>
 if ('serviceWorker' in navigator) {

@@ -454,23 +454,46 @@ section{ padding:110px 0; position:relative; z-index:2; }
 }
 
 /* ============================================
-   App promo
+   App promo — swipeable carousel
    ============================================ */
-.app-promo-card{
-  max-width:920px; margin:0 auto; border-radius:var(--radius);
+.wrap--full{ padding-left:0; padding-right:0; max-width:none; }
+.wrap--full > .eyebrow, .wrap--full > .section-title{ padding:0 24px; }
+
+.app-carousel{
+  display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
+  padding:8px 24px 14px; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+}
+.app-carousel::-webkit-scrollbar{ display:none; }
+.app-slide{
+  flex:0 0 auto; scroll-snap-align:start; width:min(78vw, 300px);
+  border-radius:20px; overflow:hidden; border:1px solid var(--border);
+  background:var(--surface-1);
+}
+.app-slide-img-link{ display:block; }
+.app-slide-img{ width:100%; aspect-ratio:16/9; object-fit:cover; object-position:center; display:block; background:#0D0E17; }
+.app-slide-row{ display:flex; align-items:center; gap:10px; padding:12px; }
+.app-slide-icon{
+  width:38px; height:38px; border-radius:10px; overflow:hidden; flex-shrink:0;
   border:1px solid var(--turquoise-dim);
-  background:linear-gradient(120deg, rgba(216,174,94,.08), rgba(47,213,196,.06));
-  padding:36px 34px; display:flex; align-items:center; justify-content:space-between;
-  gap:26px; flex-wrap:wrap;
 }
-.app-promo-copy p.eyebrow{ text-align:right; margin-bottom:6px; }
-.app-promo-copy h3{ font-size:1.15rem; margin-bottom:8px; }
-.app-promo-copy p{ color:var(--text-muted); font-size:.92rem; max-width:480px; }
-.app-promo .btn{ white-space:nowrap; }
-@media (max-width:600px){
-  .app-promo-card{ padding:26px 22px; text-align:center; justify-content:center; }
-  .app-promo-copy p{ max-width:none; }
+.app-slide-icon img{ width:100%; height:100%; object-fit:cover; }
+.app-slide-meta{ flex:1; min-width:0; }
+.app-slide-title{ font-size:.86rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.app-slide-sub{ font-size:.72rem; color:var(--text-muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.app-slide-install{
+  flex-shrink:0; font-family:var(--font-latin); font-size:.78rem; font-weight:700;
+  color:var(--bg); background:var(--turquoise); border-radius:100px; padding:7px 16px;
+  text-decoration:none;
 }
+.app-carousel-dots{ display:flex; justify-content:center; gap:6px; margin-top:4px; }
+.app-carousel-dots span{
+  width:6px; height:6px; border-radius:50%; background:var(--border); transition:background .25s, width .25s;
+}
+.app-carousel-dots span.active{ background:var(--turquoise); width:18px; border-radius:100px; }
+.app-slide-row--wrap{ flex-wrap:wrap; padding-bottom:4px; }
+.app-slide-desc{ padding:0 12px 14px; font-size:.78rem; line-height:1.9; color:var(--text-muted); }
+.app-slide--placeholder{ display:flex; align-items:center; justify-content:center; min-height:260px; border-style:dashed; opacity:.6; }
+.app-slide-placeholder-inner{ padding:24px; text-align:center; font-size:.85rem; color:var(--text-muted); }
 
 /* ============================================
    FAQ
@@ -1033,84 +1056,126 @@ section{ padding:110px 0; position:relative; z-index:2; }
 
   <!-- WORK -->
   <section class="work" id="work">
-    <div class="wrap">
+    <div class="wrap wrap--full">
       <p class="eyebrow center">نمونه‌کار</p>
       <h2 class="section-title center">پروژه‌هایی که ساخته‌ام</h2>
-      <div class="work-grid">
-        <div class="work-card tilt mouse-glow">
-          <div class="work-info">
-            <h3>پلتفرم آموزش برنامه‌نویسی و هوش مصنوعی</h3>
-            <p>وب‌سایت آموزشی فارسی با طراحی راست‌به‌چپ، انیمیشن‌های اسکرول و افکت‌های سه‌بعدی روی کارت‌ها؛ ساخته‌شده برای مخاطب فارسی‌زبان علاقه‌مند به هوش مصنوعی.</p>
-            <span class="work-tag">RTL · انیمیشن اسکرول · آموزش آنلاین</span>
-          </div>
-        </div>
-        <div class="work-card tilt mouse-glow reveal">
-          <div class="work-info">
-            <h3>سیستم فروش خودم — kyanai.ir</h3>
-            <p><strong>چالش:</strong> برای معرفی خدماتم به یک وب‌سایت نیاز داشتم که فقط نمایشی نباشد، بلکه واقعاً بازدیدکننده را به مشتری تبدیل کند.</p>
-            <p><strong>راه‌حل:</strong> یک صفحه‌ی کامل با دمو زنده‌ی گفتگو، ویجت هوشمند جمع‌آوری اطلاعات، و اتصال مستقیم به بله طراحی و پیاده‌سازی کردم — بدون نیاز به هیچ سرور جانبی.</p>
-            <span class="work-tag">Landing Page · اتوماسیون لید · اتصال به بله</span>
-            <div class="work-result">
-              <span>بدون کد اضافه</span>
-              <span>اتصال مستقیم به بله</span>
-              <span>راه‌اندازی در چند روز</span>
+      <div class="app-carousel" id="workCarousel">
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/work-education.jpg" alt="پلتفرم آموزش برنامه‌نویسی و هوش مصنوعی" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">پلتفرم آموزش AI و برنامه‌نویسی</div>
+              <div class="app-slide-sub">RTL · انیمیشن اسکرول · آموزش آنلاین</div>
             </div>
           </div>
+          <p class="app-slide-desc">وب‌سایت آموزشی فارسی با طراحی راست‌به‌چپ، انیمیشن‌های اسکرول و افکت‌های سه‌بعدی روی کارت‌ها؛ ساخته‌شده برای مخاطب فارسی‌زبان علاقه‌مند به هوش مصنوعی.</p>
         </div>
-        <div class="work-card is-placeholder reveal">
-          <p>پروژه بعدی شما اینجا نمایش داده می‌شود ↗</p>
+
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/work-kyanai-selfcase.jpg" alt="سیستم فروش خودم — kyanai.ir" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">سیستم فروش خودم — kyanai.ir</div>
+              <div class="app-slide-sub">Landing Page · اتوماسیون لید · اتصال به بله</div>
+            </div>
+          </div>
+          <p class="app-slide-desc"><strong>چالش:</strong> یک وب‌سایت که فقط نمایشی نباشد، بلکه واقعاً بازدیدکننده را به مشتری تبدیل کند.<br><strong>راه‌حل:</strong> صفحه‌ای با دمو زنده‌ی گفتگو، ویجت هوشمند جمع‌آوری اطلاعات، و اتصال مستقیم به بله — بدون نیاز به سرور جانبی.</p>
+        </div>
+
+        <div class="app-slide app-slide--placeholder">
+          <div class="app-slide-placeholder-inner">پروژه بعدی شما اینجا نمایش داده می‌شود ↗</div>
         </div>
       </div>
+      <div class="app-carousel-dots" id="workCarouselDots"></div>
     </div>
   </section>
 
   <!-- APP PROMO -->
   <section class="app-promo">
-    <div class="wrap">
+    <div class="wrap wrap--full">
       <p class="eyebrow center">اپلیکیشن‌ها</p>
       <h2 class="section-title center">نمونه اپلیکیشن‌هایی که ساخته‌ام</h2>
-      <div class="app-promo-card reveal">
-        <div class="app-promo-copy">
-          <p class="eyebrow">اپلیکیشن ۱</p>
-          <h3>دستیار Kyanai — نسخه اپلیکیشن</h3>
-          <p>چت هوشمند، مدیریت لید و محاسبه‌گر صرفه‌جویی، حالا در قالب یک اپلیکیشن قابل نصب. همین حالا مستقیم امتحانش کنید — به‌زودی در بازار و گوگل‌پلی هم در دسترس خواهد بود.</p>
+      <div class="app-carousel" id="appCarousel">
+        <div class="app-slide">
+          <a href="app/index.html" target="_blank" rel="noopener" class="app-slide-img-link">
+            <img src="images/banners/kyanai.jpg" alt="دستیار Kyanai" class="app-slide-img" loading="lazy">
+          </a>
+          <div class="app-slide-row">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">دستیار Kyanai</div>
+              <div class="app-slide-sub">چت هوشمند · مدیریت لید · محاسبه‌گر</div>
+            </div>
+            <a href="app/index.html" target="_blank" rel="noopener" class="app-slide-install">نصب</a>
+          </div>
         </div>
-        <a href="app/index.html" target="_blank" rel="noopener" class="btn btn-primary">مشاهده و نصب اپ ←</a>
-      </div>
-      <div class="app-promo-card reveal" style="margin-top:18px;">
-        <div class="app-promo-copy">
-          <p class="eyebrow">اپلیکیشن ۲</p>
-          <h3>دستیار هوشمند کسب‌وکار</h3>
-          <p>مدیریت مشتریان، کاتالوگ محصولات، گزارش فروش، و تولید متن تبلیغاتی با هوش مصنوعی — یک اپلیکیشن کامل برای اداره‌ی فروش یک کسب‌وکار کوچک.</p>
+
+        <div class="app-slide">
+          <a href="apps/business-assistant/index.html" target="_blank" rel="noopener" class="app-slide-img-link">
+            <img src="images/banners/business.jpg" alt="دستیار هوشمند کسب‌وکار" class="app-slide-img" loading="lazy">
+          </a>
+          <div class="app-slide-row">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">دستیار کسب‌وکار</div>
+              <div class="app-slide-sub">مشتریان · محصولات · تولید متن AI</div>
+            </div>
+            <a href="apps/business-assistant/index.html" target="_blank" rel="noopener" class="app-slide-install">نصب</a>
+          </div>
         </div>
-        <a href="apps/business-assistant/index.html" target="_blank" rel="noopener" class="btn btn-primary">مشاهده و نصب اپ ←</a>
-      </div>
-      <div class="app-promo-card reveal" style="margin-top:18px;">
-        <div class="app-promo-copy">
-          <p class="eyebrow">اپلیکیشن ۳</p>
-          <h3>دستیار درآمد پیک</h3>
-          <p>ثبت سفارش، محاسبه‌ی خودکار سود واقعی (درآمد منهای هزینه بنزین)، گزارش هفتگی، و پیشنهاد بهترین مناطق کاری — برای پیک‌ها و رانندگانی که می‌خواهند دقیق بدانند چقدر سود می‌کنند.</p>
+
+        <div class="app-slide">
+          <a href="apps/courier-assistant/index.html" target="_blank" rel="noopener" class="app-slide-img-link">
+            <img src="images/banners/courier.jpg" alt="دستیار درآمد پیک" class="app-slide-img" loading="lazy">
+          </a>
+          <div class="app-slide-row">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">دستیار درآمد پیک</div>
+              <div class="app-slide-sub">ثبت سفارش · سود واقعی · گزارش</div>
+            </div>
+            <a href="apps/courier-assistant/index.html" target="_blank" rel="noopener" class="app-slide-install">نصب</a>
+          </div>
         </div>
-        <a href="apps/courier-assistant/index.html" target="_blank" rel="noopener" class="btn btn-primary">مشاهده و نصب اپ ←</a>
-      </div>
-      <div class="app-promo-card reveal" style="margin-top:18px;">
-        <div class="app-promo-copy">
-          <p class="eyebrow">اپلیکیشن ۴</p>
-          <h3>اپ آموزش هوشمند</h3>
-          <p>دوره‌های آموزشی با پیگیری پیشرفت، آزمون تعاملی، و دستیار هوش مصنوعی برای خلاصه‌سازی درس و تولید سوال تمرینی — مناسب پلتفرم‌های آموزشی و یادگیری آنلاین.</p>
+
+        <div class="app-slide">
+          <a href="apps/learning-app/index.html" target="_blank" rel="noopener" class="app-slide-img-link">
+            <img src="images/banners/learning.jpg" alt="اپ آموزش هوشمند" class="app-slide-img" loading="lazy">
+          </a>
+          <div class="app-slide-row">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">آموزش هوشمند</div>
+              <div class="app-slide-sub">دوره‌ها · آزمون · دستیار AI</div>
+            </div>
+            <a href="apps/learning-app/index.html" target="_blank" rel="noopener" class="app-slide-install">نصب</a>
+          </div>
         </div>
-        <a href="apps/learning-app/index.html" target="_blank" rel="noopener" class="btn btn-primary">مشاهده و نصب اپ ←</a>
-      </div>
-      <div class="app-promo-card reveal" style="margin-top:18px;">
-        <div class="app-promo-copy">
-          <p class="eyebrow">اپلیکیشن ۵</p>
-          <h3>دستیار هوشمند آگهی ملک</h3>
-          <p>وارد کردن مشخصات ملک و تولید خودکار متن آگهی حرفه‌ای، مدیریت آگهی‌های ذخیره‌شده، تحلیل قیمت با آگهی‌های مشابه، و پاسخ خودکار به سوالات مشتری — برای مشاورین املاک.</p>
+
+        <div class="app-slide">
+          <a href="apps/property-assistant/index.html" target="_blank" rel="noopener" class="app-slide-img-link">
+            <img src="images/banners/property.jpg" alt="دستیار آگهی ملک" class="app-slide-img" loading="lazy">
+          </a>
+          <div class="app-slide-row">
+            <span class="app-slide-icon"><img src="images/logo-kyanai.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">دستیار آگهی ملک</div>
+              <div class="app-slide-sub">تولید آگهی · تحلیل قیمت · پاسخ مشتری</div>
+            </div>
+            <a href="apps/property-assistant/index.html" target="_blank" rel="noopener" class="app-slide-install">نصب</a>
+          </div>
         </div>
-        <a href="apps/property-assistant/index.html" target="_blank" rel="noopener" class="btn btn-primary">مشاهده و نصب اپ ←</a>
       </div>
+      <div class="app-carousel-dots" id="appCarouselDots"></div>
     </div>
   </section>
+
 
   <!-- FAQ -->
   <section class="faq" id="faq">
@@ -1307,6 +1372,42 @@ if (socialToggle && socialRow) {
     socialToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 }
+
+// ============================================
+// Carousels (apps + work): dot indicators (IntersectionObserver
+// avoids RTL scrollLeft inconsistencies across browsers)
+// ============================================
+function initCarouselDots(carouselId, dotsId) {
+  const carousel = document.getElementById(carouselId);
+  const dotsContainer = document.getElementById(dotsId);
+  if (!carousel || !dotsContainer) return;
+  const slides = Array.from(carousel.querySelectorAll('.app-slide'));
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => {
+      slides[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    });
+    dotsContainer.appendChild(dot);
+  });
+  const dots = Array.from(dotsContainer.children);
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          const idx = slides.indexOf(entry.target);
+          dots.forEach((d) => d.classList.remove('active'));
+          if (dots[idx]) dots[idx].classList.add('active');
+        }
+      });
+    },
+    { root: carousel, threshold: [0.6] }
+  );
+  slides.forEach((s) => io.observe(s));
+}
+initCarouselDots('appCarousel', 'appCarouselDots');
+initCarouselDots('workCarousel', 'workCarouselDots');
 
 // ============================================
 // Mobile nav toggle

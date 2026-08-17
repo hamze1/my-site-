@@ -634,6 +634,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
     background:var(--bg); border-top:1px solid var(--border);
     flex-direction:column; align-items:flex-start; gap:0;
     padding:8px 28px 20px;
+    max-height:calc(100vh - 76px); overflow-y:auto;
     transform:translateY(-130%); transition:transform .3s var(--ease);
   }
   .nav.open{ transform:translateY(0); }
@@ -777,10 +778,15 @@ section{ padding:110px 0; position:relative; z-index:2; }
       <span class="logo-text">kyan<span class="logo-dot">ai</span></span>
     </a>
     <nav class="nav" id="nav">
+      <a href="#about">درباره</a>
+      <a href="#problem">چالش</a>
       <a href="#services">خدمات</a>
       <a href="#process">فرآیند کار</a>
       <a href="#kian">کیان</a>
+      <a href="#why">چرا Kyanai</a>
       <a href="#work">نمونه‌کار</a>
+      <a href="#apps">اپلیکیشن‌ها</a>
+      <a href="#faq">سوالات</a>
       <a href="#contact" class="nav-cta">شروع همکاری</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="باز کردن منو">
@@ -893,54 +899,102 @@ section{ padding:110px 0; position:relative; z-index:2; }
 
   <!-- SERVICES -->
   <section class="services" id="services">
-    <div class="wrap">
+    <div class="wrap wrap--full">
       <p class="eyebrow center">خدمات</p>
       <h2 class="section-title center">هرچه برای فروش آنلاین نیاز دارید</h2>
 
-      <div class="service-grid">
-        <article class="service-card tilt mouse-glow">
-          <span class="service-icon service-icon-img"><img src="images/icon-consulting.webp" alt="" loading="lazy"></span>
-          <h3>مشاوره هوش مصنوعی</h3>
-          <p>بررسی مسیر فروش فعلی شما و طراحی نقشه‌راه اتوماسیون، متناسب با نوع کسب‌وکار و بودجه.</p>
-          <div class="service-price">از ۲,۰۰۰,۰۰۰ تومان</div>
-          <div class="service-meta"><span>تحویل: ۳-۵ روز</span><a href="#contact">شروع پروژه ←</a></div>
-        </article>
-        <article class="service-card tilt mouse-glow">
-          <span class="service-icon service-icon-img"><img src="images/icon-training.webp" alt="" loading="lazy"></span>
-          <h3>آموزش تیم فروش</h3>
-          <p>آموزش عملی استفاده از ابزارهای هوش مصنوعی به تیم شما، تا بدون وابستگی به من ادامه دهید.</p>
-          <div class="service-price">از ۴,۰۰۰,۰۰۰ تومان</div>
-          <div class="service-meta"><span>تحویل: ۱ هفته</span><a href="#contact">شروع پروژه ←</a></div>
-        </article>
-        <article class="service-card tilt mouse-glow">
-          <span class="service-icon service-icon-img"><img src="images/icon-website.webp" alt="" loading="lazy"></span>
-          <h3>طراحی وب‌سایت</h3>
-          <p>وب‌سایت‌هایی سریع، مدرن و آماده برای فروش؛ با ساختاری که موتورهای جست‌وجو هم آن را می‌فهمند.</p>
-          <div class="service-price">از ۶,۰۰۰,۰۰۰ تومان</div>
-          <div class="service-meta"><span>تحویل: ۱-۲ هفته</span><a href="#contact">شروع پروژه ←</a></div>
-        </article>
-        <article class="service-card tilt mouse-glow">
-          <span class="service-icon service-icon-img"><img src="images/icon-app.webp" alt="" loading="lazy"></span>
-          <h3>توسعه اپلیکیشن</h3>
-          <p>اپلیکیشن موبایل اختصاصی برای کسب‌وکارهایی که می‌خواهند تجربه‌ای فراتر از یک وب‌سایت بسازند.</p>
-          <div class="service-price">از ۴۵,۰۰۰,۰۰۰ تومان</div>
-          <div class="service-meta"><span>تحویل: توافقی</span><a href="#contact">شروع پروژه ←</a></div>
-        </article>
-        <article class="service-card tilt mouse-glow">
-          <span class="service-icon service-icon-img"><img src="images/icon-marketing.webp" alt="" loading="lazy"></span>
-          <h3>دیجیتال مارکتینگ</h3>
-          <p>کمپین‌های تبلیغاتی و محتوایی که مخاطب فارسی‌زبان را از دیدن آگهی تا خرید همراهی می‌کند.</p>
-          <div class="service-price">از ۵,۰۰۰,۰۰۰ تومان / ماه</div>
-          <div class="service-meta"><span>تحویل: ماهانه</span><a href="#contact">شروع پروژه ←</a></div>
-        </article>
-        <article class="service-card tilt mouse-glow">
-          <span class="service-icon service-icon-img"><img src="images/icon-automation.webp" alt="" loading="lazy"></span>
-          <h3>اتوماسیون فروش</h3>
-          <p>ربات‌های گفت‌وگوی هوشمند که پیام می‌گیرند، سوال جواب می‌دهند و سفارش را نهایی می‌کنند.</p>
-          <div class="service-price">از ۱۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="service-meta"><span>تحویل: ۱-۲ هفته</span><a href="#contact">شروع پروژه ←</a></div>
-        </article>
+      <div class="app-carousel" id="servicesCarousel">
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/svc-consulting.jpg" alt="مشاوره هوش مصنوعی" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/icon-consulting.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">مشاوره هوش مصنوعی</div>
+              <div class="app-slide-sub">از ۲,۰۰۰,۰۰۰ تومان · تحویل ۳-۵ روز</div>
+            </div>
+            <a href="#contact" class="app-slide-install">شروع</a>
+          </div>
+          <p class="app-slide-desc">بررسی مسیر فروش فعلی شما و طراحی نقشه‌راه اتوماسیون، متناسب با نوع کسب‌وکار و بودجه.</p>
+        </div>
+
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/svc-training.jpg" alt="آموزش تیم فروش" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/icon-training.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">آموزش تیم فروش</div>
+              <div class="app-slide-sub">از ۴,۰۰۰,۰۰۰ تومان · تحویل ۱ هفته</div>
+            </div>
+            <a href="#contact" class="app-slide-install">شروع</a>
+          </div>
+          <p class="app-slide-desc">آموزش عملی استفاده از ابزارهای هوش مصنوعی به تیم شما، تا بدون وابستگی به من ادامه دهید.</p>
+        </div>
+
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/svc-website.jpg" alt="طراحی وب‌سایت" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/icon-website.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">طراحی وب‌سایت</div>
+              <div class="app-slide-sub">از ۶,۰۰۰,۰۰۰ تومان · تحویل ۱-۲ هفته</div>
+            </div>
+            <a href="#contact" class="app-slide-install">شروع</a>
+          </div>
+          <p class="app-slide-desc">وب‌سایت‌هایی سریع، مدرن و آماده برای فروش؛ با ساختاری که موتورهای جست‌وجو هم آن را می‌فهمند.</p>
+        </div>
+
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/svc-app.jpg" alt="توسعه اپلیکیشن" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/icon-app.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">توسعه اپلیکیشن</div>
+              <div class="app-slide-sub">از ۴۵,۰۰۰,۰۰۰ تومان · تحویل توافقی</div>
+            </div>
+            <a href="#contact" class="app-slide-install">شروع</a>
+          </div>
+          <p class="app-slide-desc">اپلیکیشن موبایل اختصاصی برای کسب‌وکارهایی که می‌خواهند تجربه‌ای فراتر از یک وب‌سایت بسازند.</p>
+        </div>
+
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/svc-marketing.jpg" alt="دیجیتال مارکتینگ" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/icon-marketing.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">دیجیتال مارکتینگ</div>
+              <div class="app-slide-sub">از ۵,۰۰۰,۰۰۰ تومان/ماه · تحویل ماهانه</div>
+            </div>
+            <a href="#contact" class="app-slide-install">شروع</a>
+          </div>
+          <p class="app-slide-desc">کمپین‌های تبلیغاتی و محتوایی که مخاطب فارسی‌زبان را از دیدن آگهی تا خرید همراهی می‌کند.</p>
+        </div>
+
+        <div class="app-slide">
+          <span class="app-slide-img-link">
+            <img src="images/banners/svc-automation.jpg" alt="اتوماسیون فروش" class="app-slide-img" loading="lazy">
+          </span>
+          <div class="app-slide-row app-slide-row--wrap">
+            <span class="app-slide-icon"><img src="images/icon-automation.webp" alt=""></span>
+            <div class="app-slide-meta">
+              <div class="app-slide-title">اتوماسیون فروش</div>
+              <div class="app-slide-sub">از ۱۰,۰۰۰,۰۰۰ تومان · تحویل ۱-۲ هفته</div>
+            </div>
+            <a href="#contact" class="app-slide-install">شروع</a>
+          </div>
+          <p class="app-slide-desc">ربات‌های گفت‌وگوی هوشمند که پیام می‌گیرند، سوال جواب می‌دهند و سفارش را نهایی می‌کنند.</p>
+        </div>
       </div>
+      <div class="app-carousel-dots" id="servicesCarouselDots"></div>
     </div>
   </section>
 
@@ -1025,7 +1079,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
   </section>
 
   <!-- WHY KYANAI -->
-  <section class="why">
+  <section class="why" id="why">
     <div class="wrap">
       <p class="eyebrow center">چرا Kyanai</p>
       <h2 class="section-title center">تفاوت Kyanai با یک آژانس معمولی</h2>
@@ -1097,7 +1151,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
   </section>
 
   <!-- APP PROMO -->
-  <section class="app-promo">
+  <section class="app-promo" id="apps">
     <div class="wrap wrap--full">
       <p class="eyebrow center">اپلیکیشن‌ها</p>
       <h2 class="section-title center">نمونه اپلیکیشن‌هایی که ساخته‌ام</h2>
@@ -1273,7 +1327,6 @@ section{ padding:110px 0; position:relative; z-index:2; }
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <span>© <span id="year"></span> kyanai.ir</span>
     <div class="social-row" aria-label="شبکه‌های اجتماعی">
       <a href="https://instagram.com/hamzakian.ai" target="_blank" rel="noopener" aria-label="اینستاگرام" class="social-icon">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.21.6 1.76 1.15.55.55.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.76 4.9 4.9 0 0 1-1.76 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.76-1.15 4.9 4.9 0 0 1-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.21 1.15-1.76A4.9 4.9 0 0 1 5.44 2.54c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.51.61-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.36 4.25 9.68 4.25 12s.01 3.64.06 4.49c.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.61.51 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.51-.61.67-1.03.12-.31.26-.78.3-1.65.05-.85.06-1.17.06-4.49s-.01-3.64-.06-4.49c-.04-.87-.18-1.34-.3-1.65a2.72 2.72 0 0 0-.67-1.03 2.72 2.72 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3C14.99 3.81 14.67 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
@@ -1316,6 +1369,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
       </button>
     </div>
     <span>اتوماسیون فروش با هوش مصنوعی</span>
+    <span>© <span id="year"></span> kyanai.ir</span>
   </div>
 </footer>
 
@@ -1408,6 +1462,7 @@ function initCarouselDots(carouselId, dotsId) {
 }
 initCarouselDots('appCarousel', 'appCarouselDots');
 initCarouselDots('workCarousel', 'workCarouselDots');
+initCarouselDots('servicesCarousel', 'servicesCarouselDots');
 
 // ============================================
 // Mobile nav toggle

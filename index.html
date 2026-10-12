@@ -769,6 +769,7 @@ section{ padding:110px 0; position:relative; z-index:2; }
 </script>
 </head>
 <body>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.bubble{opacity:1!important;transform:none!important}</style></noscript>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="noise-layer"></div>
@@ -778,4 +779,566 @@ section{ padding:110px 0; position:relative; z-index:2; }
   <div class="wrap header-inner">
     <a href="#top" class="logo">
       <span class="logo-mark"><img src="images/logo-kyanai.webp" alt="Kyanai" width="38" height="38"><span class="logo-spark" aria-hidden="true"></span></span>
-      <!-- ادامه کدهای سایت شما -->
+      <span class="logo-text">kyan<span class="logo-dot">ai</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="منو" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav" id="nav">
+      <a href="#services">خدمات</a>
+      <a href="#process">روند کار</a>
+      <a href="#kian">کیان</a>
+      <a href="#work">نمونه‌کار</a>
+      <a href="#apps">اپلیکیشن‌ها</a>
+      <a href="#faq">سوالات متداول</a>
+      <a href="#contact" class="nav-cta">مشاوره رایگان</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= Hero ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">AI Sales Automation</div>
+      <h1>فروشت رو <span class="highlight">۲۴ ساعته</span> به هوش مصنوعی بسپار</h1>
+      <p class="hero-lead">سیستم‌های اتوماسیون فروش مبتنی بر هوش مصنوعی برای کسب‌وکارهای فارسی‌زبان؛ پاسخ‌گویی فوری به مشتری، جمع‌آوری لید و پیگیری خودکار، بدون کدنویسی اضافه.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary btn-lg">دریافت مشاوره رایگان</a>
+        <a href="#services" class="btn btn-ghost btn-lg">مشاهده خدمات</a>
+      </div>
+    </div>
+    <div class="hero-demo">
+      <div class="demo-card tilt mouse-glow">
+        <div class="demo-card-head"><span class="dot dot-live"></span> کیان · دستیار فروش · آنلاین</div>
+        <div class="chat-thread" id="demoThread" aria-live="polite"></div>
+        <div class="demo-status" id="demoStatus">Lead captured automatically</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= About ================= -->
+<div class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo reveal"><img src="images/hamza.webp" alt="حمزه، مؤسس KyanAI" width="1024" height="1024"></div>
+    <div class="about-copy reveal">
+      <div class="eyebrow">About</div>
+      <h2>من حمزه‌ام؛ سیستم فروش خودکار می‌سازم</h2>
+      <p>کار من طراحی و پیاده‌سازی سیستم‌هایی است که پیام‌های مشتری را جواب می‌دهند، لید جمع می‌کنند و فروش را بدون خستگی پیش می‌برند؛ از چت‌بات و اپ PWA تا سایت و کمپین دیجیتال، همه مخصوص بازار و زبان فارسی.</p>
+      <ul class="about-tags">
+        <li>AI Chatbot</li><li>CRM</li><li>PWA</li><li>Automation</li><li>Persian RTL</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="trust-strip">
+  <div class="wrap trust-inner">
+    <span>پاسخ‌گویی ۲۴ ساعته</span><span class="sep">•</span>
+    <span>مخصوص کسب‌وکار فارسی‌زبان</span><span class="sep">•</span>
+    <span>اتصال به بله و اینستاگرام</span><span class="sep">•</span>
+    <span>مشاوره اولیه رایگان</span>
+  </div>
+</div>
+
+<!-- ================= Problem / Solution ================= -->
+<section id="problem">
+  <div class="wrap">
+    <div class="eyebrow center">Problem → Solution</div>
+    <h2 class="section-title center reveal">فروشی که از دست می‌ره، معمولاً بخاطر دیر جواب دادنه</h2>
+    <div class="problem-grid">
+      <div class="problem-col problem-col--bad reveal">
+        <div class="problem-heading">✕ بدون اتوماسیون</div>
+        <ul class="problem-list">
+          <li>پیام‌ها ساعت‌ها بی‌جواب می‌مانند</li>
+          <li>لیدها در دایرکت و تلگرام گم می‌شوند</li>
+          <li>پیگیری مشتری فراموش می‌شود</li>
+          <li>وقت تیم صرف سوال‌های تکراری می‌شود</li>
+        </ul>
+      </div>
+      <div class="problem-col problem-col--good reveal">
+        <div class="problem-heading">✓ با KyanAI</div>
+        <ul class="problem-list">
+          <li>پاسخ فوری و هوشمند، شبانه‌روز</li>
+          <li>ثبت خودکار نام و شماره مشتری</li>
+          <li>پیگیری خودکار تا مرحله خرید</li>
+          <li>تیم فقط روی مشتری‌های جدی تمرکز می‌کند</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Services ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2 class="section-title reveal">خدمات</h2>
+    <div class="service-grid">
+
+      <article class="service-card tilt mouse-glow reveal">
+        <span class="service-icon service-icon-img"><img src="images/icon-consulting.webp" alt="" width="64" height="64"></span>
+        <h3>مشاوره هوش مصنوعی</h3>
+        <p>بررسی فرایند فروش شما و مشخص کردن اینکه کجا هوش مصنوعی بیشترین صرفه‌جویی و درآمد را می‌سازد.</p>
+        <div class="service-price">از ۲ میلیون تومان</div>
+        <div class="service-meta"><span>تحویل ۳-۵ روز</span><a href="#contact">سفارش ←</a></div>
+      </article>
+
+      <article class="service-card tilt mouse-glow reveal">
+        <span class="service-icon service-icon-img"><img src="images/icon-training.webp" alt="" width="64" height="64"></span>
+        <h3>آموزش تیم فروش</h3>
+        <p>آموزش عملی تیم شما برای استفاده از ابزارهای هوش مصنوعی در پاسخ‌گویی، پیگیری و بستن فروش.</p>
+        <div class="service-price">از ۴ میلیون تومان</div>
+        <div class="service-meta"><span>تحویل ۱ هفته</span><a href="#contact">سفارش ←</a></div>
+      </article>
+
+      <article class="service-card tilt mouse-glow reveal">
+        <span class="service-icon service-icon-img"><img src="images/icon-website.webp" alt="" width="64" height="64"></span>
+        <h3>طراحی وب‌سایت</h3>
+        <p>سایت سریع، ریسپانسیو و سئو‌شده با پشتیبانی کامل راست‌به‌چپ، آماده تبدیل بازدیدکننده به مشتری.</p>
+        <div class="service-price">از ۶ میلیون تومان</div>
+        <div class="service-meta"><span>تحویل ۱-۲ هفته</span><a href="#contact">سفارش ←</a></div>
+      </article>
+
+      <article class="service-card tilt mouse-glow reveal">
+        <span class="service-icon service-icon-img"><img src="images/icon-app.webp" alt="" width="64" height="64"></span>
+        <h3>توسعه اپلیکیشن</h3>
+        <p>اپلیکیشن PWA و موبایل اختصاصی برای کسب‌وکار شما؛ از دستیار هوشمند تا مدیریت سفارش و مشتری.</p>
+        <div class="service-price">از ۳۵ میلیون تومان</div>
+        <div class="service-meta"><span>تحویل توافقی</span><a href="#contact">سفارش ←</a></div>
+      </article>
+
+      <article class="service-card tilt mouse-glow reveal">
+        <span class="service-icon service-icon-img"><img src="images/icon-marketing.webp" alt="" width="64" height="64"></span>
+        <h3>دیجیتال مارکتینگ</h3>
+        <p>مدیریت شبکه‌های اجتماعی، تولید محتوا و کمپین‌های تبلیغاتی با کمک هوش مصنوعی و گزارش ماهانه.</p>
+        <div class="service-price">از ۵ میلیون تومان/ماه</div>
+        <div class="service-meta"><span>تحویل ماهانه</span><a href="#contact">سفارش ←</a></div>
+      </article>
+
+      <article class="service-card tilt mouse-glow reveal">
+        <span class="service-icon service-icon-img"><img src="images/icon-automation.webp" alt="" width="64" height="64"></span>
+        <h3>اتوماسیون فروش</h3>
+        <p>چت‌بات هوشمند، ثبت خودکار لید و پیگیری، متصل به بله، اینستاگرام و سایت شما.</p>
+        <div class="service-price">از ۱۰ میلیون تومان</div>
+        <div class="service-meta"><span>تحویل ۱-۲ هفته</span><a href="#contact">سفارش ←</a></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= Lead magnet ================= -->
+<section class="lead-magnet">
+  <div class="wrap">
+    <div class="lead-magnet-card reveal">
+      <div class="lead-magnet-copy">
+        <h3>ببین اتوماسیون برای کسب‌وکار تو چقدر صرفه‌جویی می‌کند</h3>
+        <p>محاسبه‌گر رایگان داخل اپ دستیار Kyanai؛ در ۳۰ ثانیه برآورد ساعت و لید ماهانه را ببین.</p>
+      </div>
+      <a href="app/" class="btn btn-primary">امتحان محاسبه‌گر</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Process ================= -->
+<section id="process">
+  <div class="wrap">
+    <div class="eyebrow center">Process</div>
+    <h2 class="section-title center reveal">روند کار</h2>
+    <div class="process-list">
+      <div class="process-item reveal"><span class="process-num">01</span><div><h3>گفت‌وگوی اولیه</h3><p>کسب‌وکار، مشتری‌ها و روش فعلی فروش شما را بررسی می‌کنیم. رایگان و بدون تعهد.</p></div></div>
+      <div class="process-item reveal"><span class="process-num">02</span><div><h3>طراحی راه‌حل</h3><p>سناریوی گفت‌وگوی هوشمند، مسیر جمع‌آوری لید و ابزارهای لازم را مشخص می‌کنیم.</p></div></div>
+      <div class="process-item reveal"><span class="process-num">03</span><div><h3>پیاده‌سازی و تست</h3><p>سیستم ساخته و روی کانال‌های شما (بله، اینستاگرام، سایت) متصل و تست می‌شود.</p></div></div>
+      <div class="process-item reveal"><span class="process-num">04</span><div><h3>تحویل و پشتیبانی</h3><p>آموزش استفاده، تحویل کامل و پشتیبانی بعد از راه‌اندازی.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Kian ================= -->
+<section class="kian" id="kian">
+  <div class="wrap kian-grid">
+    <div class="kian-frame reveal">
+      <img class="kian-photo" src="images/icon-kian.webp" alt="کیان، دستیار هوشمند فروش" width="480" height="480">
+      <span class="kian-pulse"></span>
+    </div>
+    <div class="kian-copy reveal">
+      <div class="eyebrow">Meet Kian</div>
+      <h2>کیان، دستیار هوشمند فروش شما</h2>
+      <p>کیان شخصیت هوش مصنوعی KyanAI است؛ به فارسی روان صحبت می‌کند، سوال‌های مشتری را جواب می‌دهد، نیازش را می‌فهمد و اطلاعات تماسش را برای شما ثبت می‌کند. همین الان با دکمه چت پایین صفحه امتحانش کن.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Work ================= -->
+<section id="work">
+  <div class="wrap">
+    <div class="eyebrow">Work</div>
+    <h2 class="section-title reveal">نمونه‌کار</h2>
+    <div class="work-grid">
+
+      <div class="work-card tilt mouse-glow reveal">
+        <div class="work-info">
+          <span class="work-tag">AI Education Platform</span>
+          <h3>پلتفرم آموزش هوشمند</h3>
+          <p>وب‌سایت آموزشی فارسی با انیمیشن و افکت سه‌بعدی، طراحی راست‌به‌چپ و تجربه کاربری روان.</p>
+          <div class="work-result"><span>RTL Design</span><span>Scroll Reveal</span></div>
+        </div>
+        <img src="images/banners/work-education.jpg" alt="نمونه‌کار پلتفرم آموزش هوشمند" width="360" height="203" style="border-radius:12px;max-width:360px;width:100%;height:auto">
+      </div>
+
+      <div class="work-card tilt mouse-glow reveal">
+        <div class="work-info">
+          <span class="work-tag">Kyanai.ir Website</span>
+          <h3>سایت خود KyanAI</h3>
+          <p>سیستم فروش خودم، از صفر تا اتصال به بله: صفحه فرود، چت هوشمند و جمع‌آوری خودکار لید.</p>
+          <div class="work-result"><span>Landing Page</span><span>Lead Automation</span></div>
+        </div>
+        <img src="images/banners/work-kyanai-selfcase.jpg" alt="نمونه‌کار سایت Kyanai" width="360" height="203" style="border-radius:12px;max-width:360px;width:100%;height:auto">
+      </div>
+
+      <div class="work-card is-placeholder reveal"><p>نمونه‌کارهای بیشتر به‌زودی اضافه می‌شود</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Why ================= -->
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow center">Why KyanAI</div>
+    <h2 class="section-title center reveal">چرا KyanAI؟</h2>
+    <div class="why-grid">
+      <div class="why-card reveal"><div class="why-num">01</div><h3>مخصوص فارسی</h3><p>گفت‌وگو، طراحی و تقویم شمسی، همه بومی و راست‌به‌چپ.</p></div>
+      <div class="why-card reveal"><div class="why-num">02</div><h3>تحویل سریع</h3><p>بیشتر پروژه‌ها در ۱ تا ۲ هفته راه‌اندازی می‌شوند.</p></div>
+      <div class="why-card reveal"><div class="why-num">03</div><h3>قیمت شفاف</h3><p>قیمت شروع هر خدمت روی سایت مشخص است.</p></div>
+      <div class="why-card reveal"><div class="why-num">04</div><h3>پشتیبانی بعد از تحویل</h3><p>بعد از راه‌اندازی هم کنار شما هستم.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Apps carousel ================= -->
+<section id="apps">
+  <div class="wrap wrap--full">
+    <div class="eyebrow center">Apps</div>
+    <h2 class="section-title center reveal">اپلیکیشن‌های آماده امتحان</h2>
+    <div class="app-carousel" id="appCarousel">
+
+      <div class="app-slide">
+        <a class="app-slide-img-link" href="app/"><img class="app-slide-img" src="images/banners/kyanai.jpg" alt="دستیار فروش Kyanai"></a>
+        <div class="app-slide-row app-slide-row--wrap">
+          <span class="app-slide-icon"><img src="images/apps/kyanai.webp" alt=""></span>
+          <div class="app-slide-meta"><div class="app-slide-title">دستیار فروش Kyanai</div><div class="app-slide-sub">چت · مدیریت لید · محاسبه‌گر</div></div>
+          <a class="app-slide-install" href="app/">باز کردن</a>
+        </div>
+        <p class="app-slide-desc">چت هوشمند ۲۴ ساعته، مدیریت لید و محاسبه‌گر صرفه‌جویی.</p>
+      </div>
+
+      <div class="app-slide">
+        <a class="app-slide-img-link" href="apps/business-assistant/"><img class="app-slide-img" src="images/banners/business.jpg" alt="دستیار کسب‌وکار"></a>
+        <div class="app-slide-row app-slide-row--wrap">
+          <span class="app-slide-icon"><img src="images/apps/business.webp" alt=""></span>
+          <div class="app-slide-meta"><div class="app-slide-title">دستیار کسب‌وکار</div><div class="app-slide-sub">CRM · محتوا · گزارش</div></div>
+          <a class="app-slide-install" href="apps/business-assistant/">باز کردن</a>
+        </div>
+        <p class="app-slide-desc">مدیریت مشتریان و محصولات و تولید محتوا با هوش مصنوعی.</p>
+      </div>
+
+      <div class="app-slide">
+        <a class="app-slide-img-link" href="apps/courier-assistant/"><img class="app-slide-img" src="images/banners/courier.jpg" alt="دستیار درآمد پیک"></a>
+        <div class="app-slide-row app-slide-row--wrap">
+          <span class="app-slide-icon"><img src="images/apps/courier.webp" alt=""></span>
+          <div class="app-slide-meta"><div class="app-slide-title">دستیار درآمد پیک</div><div class="app-slide-sub">سود واقعی · گزارش هفتگی</div></div>
+          <a class="app-slide-install" href="apps/courier-assistant/">باز کردن</a>
+        </div>
+        <p class="app-slide-desc">ثبت سفارش، محاسبه سود واقعی و بهترین مناطق کاری برای پیک‌ها.</p>
+      </div>
+
+      <div class="app-slide">
+        <a class="app-slide-img-link" href="apps/learning-app/"><img class="app-slide-img" src="images/banners/learning.jpg" alt="اپ آموزش هوشمند"></a>
+        <div class="app-slide-row app-slide-row--wrap">
+          <span class="app-slide-icon"><img src="images/apps/learning.webp" alt=""></span>
+          <div class="app-slide-meta"><div class="app-slide-title">اپ آموزش هوشمند</div><div class="app-slide-sub">دوره · آزمون · دستیار مطالعه</div></div>
+          <a class="app-slide-install" href="apps/learning-app/">باز کردن</a>
+        </div>
+        <p class="app-slide-desc">دوره‌ی تعاملی، آزمون و دستیار مطالعه با هوش مصنوعی.</p>
+      </div>
+
+      <div class="app-slide">
+        <a class="app-slide-img-link" href="apps/property-assistant/"><img class="app-slide-img" src="images/banners/property.jpg" alt="دستیار املاک"></a>
+        <div class="app-slide-row app-slide-row--wrap">
+          <span class="app-slide-icon"><img src="images/apps/property.webp" alt=""></span>
+          <div class="app-slide-meta"><div class="app-slide-title">دستیار املاک</div><div class="app-slide-sub">آگهی هوشمند · تحلیل قیمت</div></div>
+          <a class="app-slide-install" href="apps/property-assistant/">باز کردن</a>
+        </div>
+        <p class="app-slide-desc">تولید متن آگهی حرفه‌ای و تحلیل قیمت ملک با هوش مصنوعی.</p>
+      </div>
+
+    </div>
+    <div class="app-carousel-dots" id="appDots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow center">FAQ</div>
+    <h2 class="section-title center reveal">سوالات متداول</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button" aria-expanded="false">چت‌بات هوشمند دقیقاً چه کاری می‌کند؟
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>به سوال‌های مشتری فارسی جواب می‌دهد، نیازش را می‌پرسد و نام و شماره‌اش را ثبت می‌کند تا شما فقط با مشتری‌های جدی صحبت کنید.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button" aria-expanded="false">برای شروع به دانش فنی نیاز دارم؟
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>خیر. راه‌اندازی، اتصال و آموزش استفاده را خودم انجام می‌دهم؛ شما فقط کسب‌وکارتان را معرفی می‌کنید.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button" aria-expanded="false">پروژه چقدر طول می‌کشد؟
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>مشاوره ۳ تا ۵ روز، اتوماسیون فروش و وب‌سایت معمولاً ۱ تا ۲ هفته، و اپلیکیشن بسته به پروژه توافقی است.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button" aria-expanded="false">هزینه‌ها چطور مشخص می‌شود؟
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>قیمت شروع هر خدمت روی سایت آمده است. قیمت نهایی بعد از مشاوره رایگان و مشخص شدن نیاز شما اعلام می‌شود.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button" aria-expanded="false">بعد از تحویل پشتیبانی دارم؟
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p>بله، بعد از تحویل هم برای رفع مشکل و بهبود سیستم در دسترس هستم.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Contact ================= -->
+<section id="contact">
+  <div class="wrap contact-inner">
+    <div class="eyebrow center">Contact</div>
+    <h2 class="section-title center reveal">آماده‌ای فروشت را خودکار کنیم؟</h2>
+    <p class="contact-lead center">یک پیام در بله بفرست؛ مشاوره اولیه رایگان است.</p>
+    <div class="contact-actions">
+      <a href="https://ble.ir/kyanai" target="_blank" rel="noopener" class="btn btn-primary btn-lg btn-bale">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        ارسال پیام در بله
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>© <span id="year">2026</span> KyanAI · kyanai.ir</span>
+    <div class="social-row" id="socialRow">
+      <a class="social-icon" href="https://ble.ir/kyanai" target="_blank" rel="noopener" aria-label="بله">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </a>
+      <div class="social-extra">
+        <a class="social-icon" href="https://instagram.com/kyanai.ir" target="_blank" rel="noopener" aria-label="اینستاگرام">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+      </div>
+      <button class="social-icon social-toggle" id="socialToggle" type="button" aria-label="شبکه‌های بیشتر" aria-expanded="false">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= Floating smart chat ================= -->
+<button class="chat-launcher" id="chatLauncher" type="button" aria-label="گفت‌وگو با کیان">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div class="chat-widget" id="chatWidget" role="dialog" aria-label="چت با کیان" aria-hidden="true">
+  <div class="chat-widget-head">
+    <img class="chat-widget-avatar" src="images/icon-kian.webp" alt="" width="38" height="38">
+    <div><strong>کیان</strong><span>دستیار هوشمند فروش</span></div>
+    <button class="chat-widget-close" id="chatClose" type="button" aria-label="بستن">×</button>
+  </div>
+  <div class="chat-widget-body" id="chatBody"></div>
+  <form class="chat-widget-form" id="chatForm" autocomplete="off">
+    <input id="cwFirst" name="first" placeholder="نام" required>
+    <input id="cwLast" name="last" placeholder="نام خانوادگی" required>
+    <input id="cwPhone" name="phone" type="tel" inputmode="tel" dir="ltr" placeholder="شماره موبایل (09...)" required>
+    <textarea id="cwMsg" name="msg" rows="2" placeholder="چه کمکی از من برمیاد؟" required></textarea>
+    <button class="btn btn-primary" type="submit">ارسال به بله</button>
+  </form>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $  = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var BALE = 'https://ble.ir/kyanai';
+
+  /* year */
+  var y = $('#year'); if (y) y.textContent = new Date().getFullYear();
+
+  /* header scrolled state + scroll progress */
+  var header = $('#site-header'), prog = $('#scrollProgress');
+  function onScroll(){
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    header.classList.toggle('scrolled', st > 8);
+    prog.style.width = (max > 0 ? Math.min(100, st / max * 100) : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* mobile nav */
+  var nav = $('#nav'), toggle = $('#navToggle');
+  function setNav(open){ nav.classList.toggle('open', open); toggle.setAttribute('aria-expanded', open); }
+  toggle.addEventListener('click', function(){ setNav(!nav.classList.contains('open')); });
+  $$('a', nav).forEach(function(a){ a.addEventListener('click', function(){ setNav(false); }); });
+
+  /* particles */
+  var pc = $('#bgParticles');
+  if (pc && !reduce){
+    for (var i = 0; i < 22; i++){
+      var s = document.createElement('span');
+      s.style.left = Math.random()*100 + '%';
+      s.style.top = (60 + Math.random()*50) + '%';
+      s.style.animationDuration = (14 + Math.random()*20) + 's';
+      s.style.animationDelay = (-Math.random()*20) + 's';
+      pc.appendChild(s);
+    }
+  }
+
+  /* scroll reveal (with stagger) */
+  var revealEls = $$('.reveal');
+  revealEls.forEach(function(el, i){
+    var sib = el.parentElement ? $$(':scope > .reveal', el.parentElement) : [];
+    var idx = sib.indexOf(el);
+    el.style.setProperty('--stagger', Math.max(0, idx) * 80 + 'ms');
+  });
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* 3D tilt + mouse glow (pointer devices only) */
+  if (window.matchMedia && matchMedia('(hover:hover)').matches && !reduce){
+    $$('.tilt').forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        el.style.setProperty('--ry', ((px - .5) * 8).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', ((.5 - py) * 8).toFixed(2) + 'deg');
+        el.style.setProperty('--mx', (px*100).toFixed(1) + '%');
+        el.style.setProperty('--my', (py*100).toFixed(1) + '%');
+        el.classList.add('tilt-active');
+      });
+      el.addEventListener('mouseleave', function(){
+        el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
+        el.classList.remove('tilt-active');
+      });
+    });
+  }
+
+  /* hero live-chat demo */
+  var thread = $('#demoThread'), status = $('#demoStatus');
+  var script = [
+    ['in',  'سلام 👋 من کیان هستم، دستیار هوشمند فروش. چطور می‌تونم کمکتون کنم؟'],
+    ['out', 'می‌خوام پیام‌های اینستاگرام فروشگاهم خودکار جواب داده بشه'],
+    ['in',  'عالیه! روزانه تقریباً چند پیام مشتری دریافت می‌کنید؟'],
+    ['out', 'حدود ۸۰ تا'],
+    ['in',  'با این حجم، اتوماسیون روزانه چند ساعت وقتتون رو آزاد می‌کنه. اسم و شماره‌تون رو بفرمایید تا هماهنگ کنیم.'],
+    ['status', '✓ لید جدید ثبت شد']
+  ];
+  var demoTimer;
+  function runDemo(){
+    if (!thread) return;
+    thread.innerHTML = ''; var i = 0;
+    function step(){
+      if (i >= script.length){ demoTimer = setTimeout(runDemo, 5000); return; }
+      var m = script[i++], b = document.createElement('div');
+      b.className = 'bubble ' + (m[0]==='in' ? 'bubble-in' : m[0]==='out' ? 'bubble-out' : 'bubble-status');
+      b.textContent = m[1]; thread.appendChild(b);
+      demoTimer = setTimeout(step, reduce ? 200 : 1500);
+    }
+    step();
+  }
+  runDemo();
+
+  /* app carousel dots */
+  var car = $('#appCarousel'), dots = $('#appDots');
+  if (car && dots){
+    var slides = $$('.app-slide', car);
+    slides.forEach(function(_, i){ var d = document.createElement('span'); if (!i) d.className = 'active'; dots.appendChild(d); });
+    car.addEventListener('scroll', function(){
+      var rtl = getComputedStyle(car).direction === 'rtl';
+      var first = slides[0].getBoundingClientRect(), cur = car.getBoundingClientRect();
+      var offset = Math.abs((rtl ? cur.right - first.right : first.left - cur.left));
+      var step = slides[0].offsetWidth + 16;
+      var idx = Math.max(0, Math.min(slides.length-1, Math.round(offset / step)));
+      $$('span', dots).forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    }, {passive:true});
+  }
+
+  /* FAQ accordion */
+  $$('.faq-item').forEach(function(item){
+    var q = $('.faq-q', item);
+    q.addEventListener('click', function(){
+      var open = !item.classList.contains('is-open');
+      $$('.faq-item.is-open').forEach(function(o){ o.classList.remove('is-open'); $('.faq-q', o).setAttribute('aria-expanded','false'); });
+      item.classList.toggle('is-open', open); q.setAttribute('aria-expanded', open);
+    });
+  });
+
+  /* footer social toggle */
+  var sr = $('#socialRow'), st = $('#socialToggle');
+  if (st) st.addEventListener('click', function(){ var o = sr.classList.toggle('is-open'); st.setAttribute('aria-expanded', o); });
+
+  /* floating smart chat → copy lead text → open Bale */
+  var launcher = $('#chatLauncher'), widget = $('#chatWidget'), body = $('#chatBody'), form = $('#chatForm');
+  function addMsg(text, cls){ var d = document.createElement('div'); d.className = 'cw-msg ' + cls; d.textContent = text; body.appendChild(d); body.scrollTop = body.scrollHeight; }
+  function openChat(){
+    widget.classList.add('is-open'); widget.setAttribute('aria-hidden','false'); launcher.classList.add('is-hidden');
+    if (!body.children.length){
+      addMsg('سلام 👋 من کیان هستم. اسم و شماره‌تون رو بنویسید و بگید چه کمکی می‌تونم بکنم؛ بعدش مستقیم به حمزه در بله وصل می‌شید.', 'cw-in');
+    }
+  }
+  function closeChat(){ widget.classList.remove('is-open'); widget.setAttribute('aria-hidden','true'); launcher.classList.remove('is-hidden'); }
+  launcher.addEventListener('click', openChat);
+  $('#chatClose').addEventListener('click', closeChat);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeChat(); });
+
+  function copyText(t){
+    if (navigator.clipboard && window.isSecureContext){ return navigator.clipboard.writeText(t); }
+    return new Promise(function(res, rej){
+      var ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy') ? res() : rej(); } catch(err){ rej(err); }
+      document.body.removeChild(ta);
+    });
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = $('#cwFirst').value.trim(), l = $('#cwLast').value.trim(), p = $('#cwPhone').value.trim(), m = $('#cwMsg').value.trim();
+    if (!f || !l || !p || !m) return;
+    var text = 'سلام، من ' + f + ' ' + l + ' هستم.\nشماره تماس: ' + p + '\nپیام: ' + m + '\n(ارسال‌شده از سایت kyanai.ir)';
+    addMsg(m, 'cw-out');
+    copyText(text).then(function(){
+      addMsg('✓ پیام شما کپی شد. الان بله باز می‌شود؛ فقط کافی است پیست کنید و ارسال بزنید.', 'cw-in');
+    }, function(){
+      addMsg('کپی خودکار انجام نشد؛ متن زیر را دستی کپی کنید و در بله بفرستید:\n\n' + text, 'cw-in');
+    }).then(function(){
+      setTimeout(function(){ window.open(BALE, '_blank', 'noopener'); }, 900);
+    });
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>

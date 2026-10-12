@@ -1,0 +1,27 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "KyanAI | کیان‌ای",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "KyanAI",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://ais-dev-5jbottrdf5jjkhuft3t6ag-349220168614.europe-west2.run.app/favicon.ico",
+      "type": "image/x-icon",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "description": "دستیار هوشمند کسب‌وکار برای اتوماسیون فروش، تولید محتوا و استفاده از ابزارهای هوش مصنوعی.",
+  "id": "kyanai-app.ai.studio"
+}
